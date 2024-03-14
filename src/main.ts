@@ -11,11 +11,15 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import {
     faBars,
     faSpinner,
+    faTableList,
+    faCircleExclamation,
 } from "@fortawesome/free-solid-svg-icons"
 
 library.add(
     faBars,
     faSpinner,
+    faTableList,
+    faCircleExclamation,
 )
 
 const pinia = createPinia()

@@ -13,6 +13,26 @@
             <div class="w-100">
               <RouterLink 
                 class="router-link is-flex has-text-weight-semibold w-100 h-100"
+                :to="{ name: 'Datatables' }"
+              >
+                <Icon icon="table-list" size="xl" class="icon"></Icon>
+                <span class="fs-14 is-align-self-center ml-3">
+                  Datatables
+                </span>
+              </RouterLink>
+
+              <RouterLink 
+                class="router-link is-flex has-text-weight-semibold w-100 h-100"
+                :to="{ name: 'Alerts' }"
+              >
+                <Icon icon="circle-exclamation" size="xl" class="icon"></Icon>
+                <span class="fs-14 is-align-self-center ml-3">
+                  Alertas
+                </span>
+              </RouterLink>
+
+              <RouterLink 
+                class="router-link is-flex has-text-weight-semibold w-100 h-100"
                 :to="{ name: 'Loader' }"
               >
                 <Icon icon="spinner" size="xl" class="icon"></Icon>
@@ -123,12 +143,8 @@ function toggleSideBar() {
       padding: 10px 12px;
       background-color: var(--grey-400);
 
-      .icon {
-        color: black;
-      }
-
-      span {
-        color: black;
+      .icon, span {
+        color: var(--black-700);
       }
 
       &:hover {
@@ -163,7 +179,10 @@ function toggleSideBar() {
   }
 }
 
-
+nav {
+  overflow: auto;
+  scrollbar-width: thin;
+}
 
 .nav-content {
   box-shadow: inset 0 -1px 0 var(--grey-600);
@@ -183,25 +202,5 @@ function toggleSideBar() {
   width: 120%;
   height: 120%;
   z-index: -1;
-}
-
-
-
-
-
-.animate {
-  transition: all 0.3s ease-in-out;
-
-  &:hover {
-    transform: translateY(-4px);
-  }
-}
-
-.icon {
-  transition: 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px)
-  }
 }
 </style>

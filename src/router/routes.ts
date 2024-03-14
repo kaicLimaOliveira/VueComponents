@@ -20,6 +20,24 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: "/tabelas",
+    name: "Datatables",
+    component: () => import("../views/Datatables.vue"),
+    meta: {
+      enableNav: true,
+      translatedName: 'Tabelas'
+    },
+  },
+  {
+    path: "/alertas",
+    name: "Alerts",
+    component: () => import("../views/Alerts.vue"),
+    meta: {
+      enableNav: true,
+      translatedName: 'Alertas'
+    },
+  },
+  {
     path: "/loaders",
     name: "Loader",
     component: () => import("../views/Loaders.vue"),

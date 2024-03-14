@@ -10,7 +10,7 @@
 <style lang="scss" scoped>
 
 svg {
- width: 4em;
+ width: 6em;
  transform-origin: center;
  animation: rotate4 2s linear infinite;
 }
