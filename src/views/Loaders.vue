@@ -40,7 +40,7 @@
         </div>
 
         <div class="w-75">
-          <Code></Code>
+          <Code component-path="loaders/WheelLoader"></Code>
         </div>
       </div>
       
@@ -54,7 +54,7 @@
         </div>
 
         <div class="w-75">
-          <Code></Code>
+          <Code component-path="loaders/GoogleLoader"></Code>
         </div>
       </div>
     </section>

@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { defineAsyncComponent, onMounted, reactive, ref } from 'vue';
 
 
 interface State {
@@ -37,6 +37,26 @@ const state: State = reactive({
   textCopy: false,
   preElementIsOpen: false,
 })
+
+
+interface Props {
+  componentPath: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  
+})
+
+
+const asyncComponent = defineAsyncComponent(() => {
+  return import (`../components/${props.componentPath}.vue`)
+})
+
+
+onMounted(() => {
+  console.log(asyncComponent);
+})
+
 
 
 const codeBlock = ref<HTMLPreElement | null>(null);
@@ -68,7 +88,7 @@ function copyCode() {
 
 pre {
   margin-bottom: 0 !important;
-  height: 150px;
+  height: 200px;
   background-color: #292d3e;
   overflow-y: hidden;
 
@@ -86,9 +106,9 @@ pre {
 }
 
 .show-me-code {
-  background-color: #252832;
+  background-color: hsla(206deg, 15%, 15%, .9);
   color: white;
   opacity: 0.9;
-  transform: translateY(-20px);
+  transform: translateY(-25px);
 }
 </style>

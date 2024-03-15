@@ -4,7 +4,6 @@
       <img src="../assets/imgs/notfound.svg" alt="Not found image" width="400" />
     </div>
     <span class="is-size-2">Página não encontrada</span>
-    <span class="is-size-3">404</span>
 
     <RouterLink :to="{ name: 'Home' }" class="has-text-dark">
       Voltar a página Home
