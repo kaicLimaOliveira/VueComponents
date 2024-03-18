@@ -12,32 +12,13 @@
           <div class="is-flex is-align-items-center w-100 is-relative">
             <div class="w-100">
               <RouterLink 
-                class="router-link is-flex has-text-weight-semibold w-100 h-100"
-                :to="{ name: 'Datatables' }"
+                v-for="route in state.routerLinks"
+                class="router-link is-flex has-text-weight-semibold w-100 h-100 mt-1"
+                :to="{ name: route.routerName }"
               >
-                <Icon icon="table-list" size="xl" class="icon"></Icon>
-                <span class="fs-14 is-align-self-center ml-3">
-                  Datatables
-                </span>
-              </RouterLink>
-
-              <RouterLink 
-                class="router-link is-flex has-text-weight-semibold w-100 h-100"
-                :to="{ name: 'Alerts' }"
-              >
-                <Icon icon="circle-exclamation" size="xl" class="icon"></Icon>
-                <span class="fs-14 is-align-self-center ml-3">
-                  Alertas
-                </span>
-              </RouterLink>
-
-              <RouterLink 
-                class="router-link is-flex has-text-weight-semibold w-100 h-100"
-                :to="{ name: 'Loader' }"
-              >
-                <Icon icon="spinner" size="xl" class="icon"></Icon>
-                <span class="fs-14 is-align-self-center ml-3">
-                  Loaders
+                <Icon :icon="route.icon" class="icon"></Icon>
+                <span class="fs-13 is-align-self-center ml-3">
+                  {{ route.labelName }}
                 </span>
               </RouterLink>
             </div>
@@ -49,7 +30,7 @@
     <header class="content is-flex is-flex-direction-column is-flex-grow-1 vh-100 w-25">
       <div class="nav-content px-5 py-3 is-flex is-justify-content-space-between">
         <div class="is-flex is-align-items-center">
-          <Icon icon="bars" @click="toggleSideBar" size="xl" class="mr-5 is-clickable fs-19"></Icon>
+          <Icon icon="bars" @click="toggleSideBar" class="mr-5 is-clickable fs-19"></Icon>
         </div>
 
         
@@ -88,10 +69,37 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 
+
 const sideBarState = ref(localStorage.getItem('sideBar') || 'opened')
 
-const state = reactive({
+interface State {
+  isLoadingImage: boolean;
+  routerLinks: {
+    routerName: string;
+    labelName: string;
+    icon: string;
+  }[]
+}
+
+const state: State = reactive({
   isLoadingImage: false,
+  routerLinks: [
+    {
+      routerName: 'Datatables',
+      labelName: 'Datatables',
+      icon: 'table-list',
+    },
+    {
+      routerName: 'Alerts',
+      labelName: 'Alertas',
+      icon: 'circle-exclamation',
+    },
+    {
+      routerName: 'Loader',
+      labelName: 'Loaders',
+      icon: 'spinner',
+    },
+  ]
 })
 
 
@@ -145,6 +153,7 @@ function toggleSideBar() {
 
       .icon, span {
         color: var(--black-700);
+        height: 1.2rem;
       }
 
       &:hover {

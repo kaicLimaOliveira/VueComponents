@@ -40,7 +40,7 @@
         </div>
 
         <div class="w-75">
-          <Code component-path="loaders/WheelLoader"></Code>
+          <Code filename="WheelLoader.vue" component-path="loaders/WheelLoader"></Code>
         </div>
       </div>
       

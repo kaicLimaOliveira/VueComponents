@@ -1,11 +1,5 @@
 import { defineStore } from "pinia";
-
-type Alert = {
-  id?: string | number;
-  type: string,
-  title: string,
-  content: string
-}
+import { Alert } from "../interfaces/Alert";
 
 interface State {
   alerts: Alert[];
@@ -18,18 +12,19 @@ export const useAlertStore = defineStore('alert', {
     }
   },
   actions: {
-    add(el: Alert) {
+    add(el: Alert, timeout?: number) {
       el.id = Math.round(Math.random() * 100000).toString()
       this.alerts.unshift(el)
 
-      setTimeout(() => {
-        this.remove(el)
-      }, 5000)
+      if (timeout != undefined) {
+        setTimeout(() => this.remove(el), timeout * 1000)
+      }
+
     },
     remove(el: Alert) {
       const i = this.alerts.indexOf(el)
-      if (i > -1)
-        this.alerts.splice(i, 1)
+      // if (i > -1)
+      //   this.alerts.splice(i, 1)
     },
   }
 })

@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div @click="copyCode" class="is-flex is-justify-content-start ml-4">
+      <span class="is-relative fs-13">
+        <div class="is-absolute ml-3 mt-2 has-text-grey-lighter">{{ props.filename }}</div>
+      </span>
+    </div>
+
     <div @click="copyCode" class="is-flex is-justify-content-end copy-code">
       <span class="tag is-normal has-text-centered is-clickable is-absolute">
         {{ state.textCopy ? 'Copiado!' : 'Copiar código' }}
@@ -41,10 +47,11 @@ const state: State = reactive({
 
 interface Props {
   componentPath: string;
+  filename?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  
+  filename: "vue",
 })
 
 

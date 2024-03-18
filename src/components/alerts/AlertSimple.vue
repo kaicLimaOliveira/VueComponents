@@ -1,5 +1,5 @@
 <template>
-  <div class="alert-container has-text-left">
+  <div class="w-100">
     <TransitionGroup name="alert">
       <div v-for="alert in alertStore.alerts" :key="alert.id" class="alert" @click="alertStore.remove(alert)">
         <div :class="alert.type" class="alert-bar"></div>

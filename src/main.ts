@@ -13,6 +13,8 @@ import {
     faSpinner,
     faTableList,
     faCircleExclamation,
+    faXmark,
+    faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons"
 
 library.add(
@@ -20,6 +22,8 @@ library.add(
     faSpinner,
     faTableList,
     faCircleExclamation,
+    faXmark,
+    faCircleCheck,
 )
 
 const pinia = createPinia()
