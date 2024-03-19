@@ -1,7 +1,7 @@
 <template>
   <div class="w-100">
     <TransitionGroup name="alert">
-      <div v-for="alert in alertStore.alerts" :key="alert.id" class="alert w-100 is-flex is-clickable mb-3"
+      <div v-for="alert, key in alertStore.alerts" :key="key" class="alert w-100 is-flex is-clickable mb-3"
         @click="alertStore.remove(alert)">
         <div class="is-flex-grow-1" :class="alert.type">
           <div class="columns p-2">

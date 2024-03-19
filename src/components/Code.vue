@@ -2,7 +2,7 @@
   <div>
     <div @click="copyCode" class="is-flex is-justify-content-start ml-4">
       <span class="is-relative fs-13">
-        <div class="is-absolute ml-3 mt-2 has-text-grey-lighter">{{ props.filename }}</div>
+        <div class="is-absolute ml-3 mt-2 has-text-grey-lighter">{{ props.filename }}.vue</div>
       </span>
     </div>
 
@@ -12,20 +12,11 @@
       </span>
     </div>
 
-    <pre ref="codeBlock" :class="{ 'code-opened': state.preElementIsOpen }">
-      <code class="w-100">
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;div class="p-4 is-flex is-flex-direction-column is-justify-content-center is-align-items-center"&gt;
-              &lt;div class="anim-circle anim"&gt;&lt;/div&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-      </code>
+    <pre ref="codeBlock" :class="{ 'code-opened': state.preElementIsOpen }">{{ asyncComponent }}
     </pre>
 
     <span @click="state.preElementIsOpen = !state.preElementIsOpen" class="tag show-me-code is-normal has-text-centerWed is-clickable w-100">
-      {{ state.preElementIsOpen ? 'Diminuir código' : 'Mostrar todo código' }}
+      {{ state.preElementIsOpen ? 'Diminuir código' : 'Mostrar todo código' }} 
     </span>
   </div>
 </template>
@@ -46,8 +37,9 @@ const state: State = reactive({
 
 
 interface Props {
-  componentPath: string;
   filename?: string;
+  componentPath: string;
+  component?: any;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -56,14 +48,21 @@ const props = withDefaults(defineProps<Props>(), {
 
 
 const asyncComponent = defineAsyncComponent(() => {
-  return import (`../components/${props.componentPath}.vue`)
+  return import (`../components/${props.componentPath}.vue`);
 })
 
 
 onMounted(() => {
-  console.log(asyncComponent);
+  try {
+    // console.log(asyncComponent);
+    
+    // console.dir(component);
+    
+  } catch (error) {
+    
+  }
+  
 })
-
 
 
 const codeBlock = ref<HTMLPreElement | null>(null);

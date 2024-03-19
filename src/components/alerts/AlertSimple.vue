@@ -1,7 +1,7 @@
 <template>
   <div class="w-100">
     <TransitionGroup name="alert">
-      <div v-for="alert in alertStore.alerts" :key="alert.id" class="alert" @click="alertStore.remove(alert)">
+      <div v-for="alert, key in alertStore.alerts" :key="key" class="alert" @click="alertStore.remove(alert)">
         <div :class="alert.type" class="alert-bar"></div>
         <div class="alert-content">
           <span class="has-text-weight-bold has-text-grey-dark is-block">{{ alert.title }}</span>

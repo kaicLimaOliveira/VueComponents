@@ -40,21 +40,27 @@
         </div>
 
         <div class="w-75">
-          <Code filename="WheelLoader.vue" component-path="loaders/WheelLoader"></Code>
+          <Code 
+            filename="WheelLoader" 
+            component-path="alerts/WheelLoader"
+          ></Code>
         </div>
       </div>
       
     </section>
 
     <section class="mt-6">
-      <h5>GoogleLoader</h5>
+      <h5>CircleLoader</h5>
       <div class="is-flex w-100 mt-2">
         <div class="is-flex is-justify-content-center w-25">
-          <GoogleLoader></GoogleLoader>
+          <CircleLoader></CircleLoader>
         </div>
 
         <div class="w-75">
-          <Code component-path="loaders/GoogleLoader"></Code>
+          <Code 
+            filename="CircleLoader" 
+            component-path="alerts/CircleLoader"
+          ></Code>
         </div>
       </div>
     </section>
@@ -64,7 +70,7 @@
 
 <script setup lang="ts">
 import Code from '../components/Code.vue';
-import GoogleLoader from '../components/loaders/GoogleLoader.vue';
+import CircleLoader from '../components/loaders/CircleLoader.vue';
 import Message from '../components/Message.vue';
 import WheelLoader from '../components/loaders/WheelLoader.vue';
 

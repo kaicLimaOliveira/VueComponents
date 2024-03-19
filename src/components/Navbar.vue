@@ -15,6 +15,7 @@
                 v-for="route in state.routerLinks"
                 class="router-link is-flex has-text-weight-semibold w-100 h-100 mt-1"
                 :to="{ name: route.routerName }"
+                :title="route.labelName"
               >
                 <Icon :icon="route.icon" class="icon"></Icon>
                 <span class="fs-13 is-align-self-center ml-3">

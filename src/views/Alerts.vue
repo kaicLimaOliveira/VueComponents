@@ -33,12 +33,12 @@
     <section class="mt-6">
       <h5>AlertSimple</h5>
       <div class="is-flex w-100 mt-2">
-        <div class="is-flex is-justify-content-center w-25 mr-6">
+        <div class="is-flex is-justify-content-center w-25">
           <AlertSimple></AlertSimple>
         </div>
 
-        <div class="w-75">
-          <Code component-path="loaders/GoogleLoader"></Code>
+        <div class="w-75 pl-6">
+          <Code component-path="alerts/AlertSimple" :component="AlertSimple" filename="AlertSimple"></Code>
         </div>
       </div>
     </section>
@@ -46,12 +46,12 @@
     <section class="mt-6">
       <h5>Alert com Progress bar</h5>
       <div class="is-flex w-100 mt-2">
-        <div class="is-flex is-justify-content-center w-25 mr-6">
+        <div class="is-flex is-justify-content-center w-25">
           <ProgressAlert></ProgressAlert>
         </div>
 
-        <div class="w-75">
-          <Code component-path="loaders/GoogleLoader"></Code>
+        <div class="w-75 pl-6">
+          <Code component-path="alerts/ProgressAlert" filename="ProgressAlert"></Code>
         </div>
       </div>
     </section>
@@ -70,8 +70,17 @@ import { onMounted } from "vue";
 
 
 const alertStore = useAlertStore()
+const getAlertSimpleContent = async () => {
+  const component = await AlertSimple
+  console.log(component);
+  
+  // alertSimpleContent.value = AlertSimple.$el.outerHTML;
+  // console.log(alertSimpleContent.value);
+  
+};
 
-onMounted(() => {
+onMounted(async () => {
+  await getAlertSimpleContent()
   alertStore.alerts = [{
     title: "Título do alerta",
     content: "Esse é um exemplo de alerta",
@@ -79,4 +88,4 @@ onMounted(() => {
     icon: "circle-check",
   }]
 })
-</script>../components/alerts/ProgressLoader.vue../components/alerts/ProgressAlert.vue
+</script>
