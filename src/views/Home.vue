@@ -1,7 +1,7 @@
 <template>
   <div class="is-flex is-flex-direction-column">
     <h3>Vue Components</h3>
-
+    Projeto em andamento...
     <div>
       <Message 
         class="fs-13"
@@ -15,16 +15,39 @@
         :closed-option="false"
       ></Message>
 
-      
+      <div class="is-flex">
+        <Message 
+          class="fs-14 w-50 mr-4"
+          title="Stores"
+          content="
+            Para variáveis globais, utilizamos os stores do Pinia, que mantêm as variáveis disponíveis em todo o projeto. 
+            Ao lado, temos o exemplo da nossa store de alerta, onde em qualquer lugar que você instancie a store, poderá 
+            criar novos alertas e acessar as variáveis instanciadas.  
+
+            <br><br>
+            
+            Com isso, podemos armazenar informações que serão compartilhadas em todo o projeto
+          "
+          :closed-option="false"
+        ></Message>
+
+        <Code 
+          class="w-50" 
+          filename="alertStore.ts" 
+          language="javascript"
+          component-path="src/stores/alertStore.ts"
+        ></Code>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import Code from '../components/Code.vue';
 import Message from '../components/Message.vue';
 
 import { dependencies, devDependencies } from "../../package.json"
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 
 
 const jsonFormatter = computed(() => {
@@ -34,4 +57,7 @@ const jsonFormatter = computed(() => {
   }
 })
 
+onMounted(() => {
+  
+})
 </script>

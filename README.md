@@ -1,18 +1,72 @@
-# Vue 3 + TypeScript + Vite
+<h1 align="center">
+  VueComponents
+</h1>
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+<p align="center">
+  <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-tecnologias-utilizadas">Tecnologias Utilizadas</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-como-executar">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-licença">Licença</a>
+</p>
 
-## Recommended IDE Setup
+<p align="center">
+  <img alt="VueComponents" src=".github/image.png" width="80%">
+  <!-- <img alt="VueComponents" src=".github/img2.jpeg" width="80%"> -->
+</p>
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## 💻 Projeto
 
-## Type Support For `.vue` Imports in TS
+Esse projeto tem como objetivo mostrar alguns dos principais componentes que eu utilizo e que desenvolvi, além de demonstrar um pouco do meu conhecimento nas tecnologias. Os componentes e o projeto utilizaram tecnologias como Vue.js 3, TypeScript, Composition API, Pinia, Vue Router e Transition.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+## ✨ Tecnologias utilizadas
+
+Esse projeto foi desenvolvido com as seguintes tecnologias:
+
+- [VueJS 3](https://vuejs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/guide/)
+- [Docker](https://docs.docker.com/guides/get-started/)
+
+## 🚀 Como executar
+
+- Você precisa instalar o [VueJs](https://vuejs.org/guide/quick-start.html) e o [NodeJs](https://nodejs.org/en/) para executar este projeto.
+
+**Clone o projeto**
+
+```bash
+  git clone https://github.com/kaicLimaOliveira/VueComponents.git
+```
+
+**Siga os passo abaixo**
+
+```bash
+  #Utilize para instalar todas as dependências
+  yarn
+
+  #Para executar o projeto
+  yarn serve
+
+```
+
+### Configuração cutomizada
+
+Veja [Referência configuração](https://cli.vuejs.org/config/).
+
+## 📄 Licença
+
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+---
+
+<a href="https://kaicLimaOliveira.github.io">
+ <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/kaicLimaOliveira" width="100px;" alt="Perfil"/>
+ <br />
+ <sub><b>Kaic de Lima Oliveira</b></sub></a>
+
+Feito por Kaic de Lima Oliveira 👋🏽 Entre em contato!
+
+[![Facebook Badge](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white&link=https://www.facebook.com/kaic.oliveira.587)](https://www.facebook.com/kaic.oliveira.587) [![Instagram Badge](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white&link=https://www.instagram.com/kaic.lo/)](https://www.instagram.com/kaic.lo)
+[![Outlook Badge](https://img.shields.io/badge/Microsoft_Outlook-0078D4?style=for-the-badge&logo=microsoft-outlook&logoColor=white&link=mailto:kaic10@outlook.com)](mailto:kaic10@outlook.com)
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kaic-de-lima-oliveira-3633041a4/)

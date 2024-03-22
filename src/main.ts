@@ -15,8 +15,14 @@ import {
     faCircleExclamation,
     faXmark,
     faCircleCheck,
+    faChevronRight,
+    faFileSignature,
 } from "@fortawesome/free-solid-svg-icons"
-
+ 
+import {
+    faWpforms,
+} from "@fortawesome/free-brands-svg-icons"
+ 
 library.add(
     faBars,
     faSpinner,
@@ -24,6 +30,10 @@ library.add(
     faCircleExclamation,
     faXmark,
     faCircleCheck,
+    faChevronRight,
+    faFileSignature,
+ 
+    faWpforms,
 )
 
 const pinia = createPinia()

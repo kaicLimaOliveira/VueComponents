@@ -25,3 +25,9 @@ const props = withDefaults(defineProps<Props>(), {
   messageHeader: true,
 })
 </script>
+
+<style scoped lang="scss">
+.message {
+  height: fit-content;
+}
+</style>

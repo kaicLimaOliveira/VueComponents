@@ -8,7 +8,6 @@ declare module 'vue-router' {
 }
 
 
-
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
@@ -44,6 +43,15 @@ const routes: RouteRecordRaw[] = [
     meta: {
       enableNav: true,
       translatedName: 'Loaders'
+    },
+  },
+  {
+    path: "/form-kit",
+    name: "FormKit",
+    component: () => import("../views/FormsKit.vue"),
+    meta: {
+      enableNav: true,
+      translatedName: 'FormKit'
     },
   },
   {

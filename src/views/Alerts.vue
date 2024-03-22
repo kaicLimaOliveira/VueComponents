@@ -38,7 +38,26 @@
         </div>
 
         <div class="w-75 pl-6">
-          <Code component-path="alerts/AlertSimple" :component="AlertSimple" filename="AlertSimple"></Code>
+          <Code 
+            language="html"
+            code="
+            <template>
+              <div class='w-100'>
+                <TransitionGroup name='alert'>
+                  <div v-for='alert, key in alertStore.alerts' :key='key' class='alert' @click='alertStore.remove(alert)'>
+                    <div :class='alert.type' class='alert-bar'></div>
+                    <div class='alert-content'>
+                      <span class='has-text-weight-bold has-text-grey-dark is-block'>{{ alert.title }}</span>
+                      <span class='has-text-grey fs-14 has-text-weight-medium' v-html='alert.content'></span>
+                    </div>
+                  </div>
+                </TransitionGroup>
+              </div>
+            </template>
+            "
+            component-path="src/components/alerts/AlertSimple.vue" 
+            filename="AlertSimple.vue"
+          ></Code>
         </div>
       </div>
     </section>
@@ -51,7 +70,11 @@
         </div>
 
         <div class="w-75 pl-6">
-          <Code component-path="alerts/ProgressAlert" filename="ProgressAlert"></Code>
+          <Code 
+            language="html"
+            component-path="src/components/alerts/ProgressAlert.vue" 
+            filename="ProgressAlert.vue"
+          ></Code>
         </div>
       </div>
     </section>
@@ -70,17 +93,11 @@ import { onMounted } from "vue";
 
 
 const alertStore = useAlertStore()
-const getAlertSimpleContent = async () => {
-  const component = await AlertSimple
-  console.log(component);
-  
-  // alertSimpleContent.value = AlertSimple.$el.outerHTML;
-  // console.log(alertSimpleContent.value);
-  
-};
 
 onMounted(async () => {
-  await getAlertSimpleContent()
+  // const component = ProgressAlert?.render()
+  // console.log(component);
+  
   alertStore.alerts = [{
     title: "Título do alerta",
     content: "Esse é um exemplo de alerta",

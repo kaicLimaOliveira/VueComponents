@@ -9,18 +9,20 @@
         1. Props:
           <ul>
             <li>
-              is-loading: Dentro da sua página, você precisa definir uma variável booleana para indicar se o loader está ativado ou não.
+              is-loading(boolean): Dentro da sua página, você precisa definir uma variável booleana para indicar se o loader está 
+              ativado ou não.
             </li>
             <li>
-              timeout: Essa propriedade é opcional. Caso você insira um número em segundos, após esse tempo o loader será automaticamente desativado.
+              timeout(number): Essa propriedade é opcional. Caso você insira um número em segundos, após esse tempo o loader será 
+              automaticamente desativado.
             </li>
           </ul>
 
         2. Emits:
           <ul>
             <li>
-              timeout-ended: Este é o método emit responsável por atualizar a variável que ativou o loader de verdadeiro para falso quando 
-              excede o tempo estipulado.
+              timeout-ended(boolean): Este é o método emit responsável por atualizar a variável que ativou o loader de verdadeiro para 
+              falso quando excede o tempo estipulado.
             </li>
           </ul>
       " 
