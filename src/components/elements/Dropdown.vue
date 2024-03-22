@@ -1,5 +1,5 @@
 <template>
-  <span
+  <menu
     @click="state.show = !state.show"
     :class="{ 'closed': isClosed, 'hovered-link': state.wrapperHovered }"
     @mouseover="state.wrapperHovered = true"
@@ -17,7 +17,7 @@
       class="icon arrow"
       :class="{ 'rotate-arrow': state.show }"
     ></Icon>
-  </span>
+  </menu>
  
   <div class="links-container navbar-item-container" :class="{ 'links-container-bg': state.show }">
     <TransitionGroup name="fade-list">

@@ -31,12 +31,13 @@
           :closed-option="false"
         ></Message>
 
-        <Code 
-          class="w-50" 
-          filename="alertStore.ts" 
-          language="javascript"
-          component-path="src/stores/alertStore.ts"
-        ></Code>
+        <aside class="w-50">
+          <Code 
+            filename="alertStore.ts" 
+            language="javascript"
+            component-path="src/assets/files/alertStore.txt"
+          ></Code>
+        </aside>
       </div>
     </div>
   </div>

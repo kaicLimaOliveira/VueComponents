@@ -2,7 +2,7 @@
   <div>
     <div @click="copyCode" class="is-flex is-justify-content-start ml-4">
       <span class="is-relative fs-13">
-        <div class="is-absolute ml-3 mt-3 has-text-black has-text-weight-semibold">{{ props.filename }}</div>
+        <div class="is-absolute mt-3 has-text-black has-text-weight-semibold">{{ props.filename }}</div>
       </span>
     </div>
 
@@ -13,10 +13,12 @@
     </div>
 
     <pre 
-      ref="codeBlock" :class="{ 'code-opened': state.preElementIsOpen }"
+      ref="codeBlock" 
+      :class="{ 'code-opened': state.preElementIsOpen }"
+      :style="`height: ${props.height}px;`"
     >
       <code :class="`language-${props.language}`">
-{{ props.code === undefined ? state.textElement : '' }}
+{{ state.textElement }}
       </code>
     </pre>
 
@@ -50,11 +52,13 @@ interface Props {
   filename?: string;
   componentPath: string;
   language: string;
+  height?: number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   filename: "vue",
   language: "javascript",
+  height: 260
 })
 
 
@@ -65,31 +69,43 @@ onMounted(async () => {
 
 
 async function returnTextAlertStore() {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/${props.componentPath}`)
-  let text = await response.text()
-  const indexOfText = text.indexOf("//")
+  await fetch(`${window.location.origin}/${props.componentPath}`)
+    .then(response => response.text())
+    .then(text => {
+      state.textElement = text;
+    });
 
-  if (indexOfText !== -1) {
-    text = text.substring(0, indexOfText)
-  }
-
-  state.textElement = text
+  return state.textElement
 }
 
 
 const codeBlock = ref<HTMLPreElement | null>(null);
-function copyCode() {
+async function copyCode() {
   if (codeBlock.value) {
-    const range = document.createRange();
-    range.selectNode(codeBlock.value);
-
-    window.getSelection()?.removeAllRanges();
-    window.getSelection()?.addRange(range);
     
-    const copied = document.execCommand('copy');
-    state.textCopy = copied
+    const textCopy = await returnTextAlertStore()
+    const preElement = document.createElement("pre");
+    
+    preElement.textContent = textCopy;
+    document.body.appendChild(preElement);
 
-    window.getSelection()?.removeAllRanges();
+    // Selecionar o texto dentro da tag <pre>
+    const selection = window.getSelection();
+    const range = document.createRange();
+    
+    range.selectNodeContents(preElement);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+
+    // Copiar o texto selecionado para a área de transferência
+    state.textCopy = document.execCommand("copy");
+
+    // Limpar a seleção
+    selection?.removeAllRanges();
+
+    // Remover a tag <pre>, já que não é mais necessária
+    document.body.removeChild(preElement);
+
     setTimeout(() => state.textCopy = false, 5000);
   }
 }
@@ -107,9 +123,8 @@ function copyCode() {
 
 pre {
   margin-bottom: 0 !important;
-  height: 300px;
   background-color: #efefef;
-  /* overflow-y: hidden; */
+  overflow-y: hidden;
   transition: all ease-in-out 0.3s;
 
   &::-webkit-scrollbar {
@@ -119,7 +134,7 @@ pre {
 }
 
 .code-opened {
-  height: fit-content;
+  height: fit-content !important;
 }
 
 .show-me-code {

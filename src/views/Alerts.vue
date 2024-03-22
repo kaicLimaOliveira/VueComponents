@@ -37,28 +37,13 @@
           <AlertSimple></AlertSimple>
         </div>
 
-        <div class="w-75 pl-6">
+        <aside class="w-75 pl-6">
           <Code 
             language="html"
-            code="
-            <template>
-              <div class='w-100'>
-                <TransitionGroup name='alert'>
-                  <div v-for='alert, key in alertStore.alerts' :key='key' class='alert' @click='alertStore.remove(alert)'>
-                    <div :class='alert.type' class='alert-bar'></div>
-                    <div class='alert-content'>
-                      <span class='has-text-weight-bold has-text-grey-dark is-block'>{{ alert.title }}</span>
-                      <span class='has-text-grey fs-14 has-text-weight-medium' v-html='alert.content'></span>
-                    </div>
-                  </div>
-                </TransitionGroup>
-              </div>
-            </template>
-            "
-            component-path="src/components/alerts/AlertSimple.vue" 
+            component-path="src/assets/files/AlertSimple.txt" 
             filename="AlertSimple.vue"
           ></Code>
-        </div>
+        </aside>
       </div>
     </section>
 
@@ -69,13 +54,13 @@
           <ProgressAlert></ProgressAlert>
         </div>
 
-        <div class="w-75 pl-6">
+        <aside class="w-75 pl-6">
           <Code 
             language="html"
-            component-path="src/components/alerts/ProgressAlert.vue" 
+            component-path="src/assets/files/ProgressAlert.txt" 
             filename="ProgressAlert.vue"
           ></Code>
-        </div>
+        </aside>
       </div>
     </section>
 

@@ -20,12 +20,12 @@
             :value="makedValue"
             :is="props.model"
             v-bind="inputBindings"
-            :placeholder="props.placeholder"
-            :disabled="props.isDisabled"
             :class="[props.model, { 'is-danger': hasErrors }, {'w-100': props.model === 'select'}]"
             @input="handleInput"
             @focus="emit('focused')"
             @blur="handleBlur"
+            :placeholder="props.placeholder"
+            :disabled="props.isDisabled"
           >
             <slot></slot>
           </Component>

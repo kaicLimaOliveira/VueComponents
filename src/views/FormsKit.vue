@@ -8,7 +8,7 @@
         isso não exclui a possibilidade de realizar validações no lado do cliente antes mesmo de os dados serem enviados para o servidor.
         O FormKit oferece validação para inputs vazios e números negativos, além de permitir a aplicação de validações personalizadas, como
         exemplificado abaixo. <br>
-        A seguir, demonstraremos como implementar esse componente. <br>
+        A seguir, demonstraremos como implementar esse componente. <br><br>
         <b> ** Propriedades em negrito são obrigatórias **</b> <br><br>
  
         1. Props:
@@ -39,41 +39,43 @@
               mensagem personalizada para o erro em questão.
             </li>
             <li>
-              custom-validation(any): .
+              custom-validation(object): Permite que você passe um objeto com uma função personalizada e com uma mensagem de erro 
+              personzalizada.
             </li>
             <li>
-              input-icon(string): .
+              icon(string): Se você quiser um ícone dentro do input, basta passar o nome do ícone do Font Awesome.
             </li>
             <li>
-              is-disabled(boolean): .
+              is-disabled(boolean): Esse campo serve para desabilitar o input.
             </li>
             <li>
-              mask(Function): .
+              mask(Function): Caso você deseje uma máscara personalizada, ela alterará o valor digitado no input conforme as 
+              especificações que você definir.
             </li>
             <li>
-              help-text(string): .
+              help-text(string): Caso você deseje um texto para auxiliar o cliente, podemos criar uma mensagem personalizada para 
+              orientá-lo.
             </li>
             <li>
-              popover(string): .
-            </li>
-            <li>
-              trigger-validation(boolean): .
+              popover(string): Caso você tenha informações adicionais, esse campo adiciona um popover para que você destaque mais 
+              informações a respeito do campo.
             </li>
           </ul>
  
         2. Emits:
           <ul>
             <li>
-              update:modelValue: .
+              update:modelValue: Emit que atualiza o valor do input.
             </li>
             <li>
-              can-send: .
+              can-send(boolean): Esse emit permite que você controle se o formulário no qual você está digitando possui informações 
+              válidas. Se o campo estiver inválido, o evento retornará um false.
             </li>
             <li>
-              focused: .
+              focused: Quando o input ativa o evento de focus, esse emit é acionado.
             </li>
             <li>
-              blurred: .
+              blurred: Quando o input ativa o evento de blur, esse emit é acionado.
             </li>
           </ul>
       "
@@ -104,32 +106,93 @@
           model="select"
           label="FormKit Select"
         >
-          <option value="csv">CSV</option>
-          <option value="xls">XLS</option>
-          <option value="xlsx">XLSX</option>
-          <option value="txt">TXT</option>
-          <option value="dat">DAT</option>
-          <option value="xml">XML</option>
+          <option value="1">First option</option>
+          <option value="2">Second option</option>
+          <option value="3">Third option</option>
+          <option value="4">Fourth option</option>
         </FormKit>
   
         <FormKit
           v-model.trim="state.inputTextarea"
           model="textarea"
           label="FormKit Textarea"
-          placeholder="Digite algo"
-          :blank="true"
+          placeholder="Digite um texto longo"
           :max-length="240"
           @can-send="(value: boolean) => state.formFields.inputTextarea = value"
         ></FormKit>
       </section>
       
-      <div class="pl-6 w-75">
+      <aside class="pl-6 w-75">
         <Code 
           language="html"
-          component-path="src/components/forms/FormKit.vue" 
+          component-path="src/assets/files/FormKit.txt" 
           filename="FormKit.vue"
+          :height="480"
         ></Code>
-      </div>
+      </aside>
+    </div>
+
+    <div class="is-flex my-4">
+      <section class="w-25">
+        <div>
+          <label class="label">Escolha o tipo do input (prop => type)</label>
+          <div class="control">
+            <label class="radio" v-for="inputType in state.customInput.typeInput.types">
+              <input type="radio" :value="inputType" v-model="state.customInput.typeInput.value" />
+              {{ inputType }}
+            </label>
+          </div>
+        </div>
+
+        <div class="my-5">
+          <label class="label">Aceita vazio (prop => blank)</label>
+          <div class="control">
+            <label class="radio">
+              <input 
+                type="radio" 
+                :value="true" 
+                v-model="state.customInput.typeInput.blank" 
+              />
+              Sim
+            </label>
+  
+            <label class="radio">
+              <input 
+                type="radio" 
+                :value="false" 
+                v-model="state.customInput.typeInput.blank" 
+              />
+              Não
+            </label>
+          </div>
+        </div>
+
+
+        <div class="field my-5">
+          <label class="label">Máximo de caracteres</label>
+          <div class="control">
+            <input 
+              v-model="state.customInput.maxLength" 
+              class="input" 
+              type="number" 
+              placeholder="255"
+            />
+          </div>
+        </div>
+      </section>
+
+      <aside class="w-75">
+        <FormKit
+          v-model.trim="state.customInput.vModel"
+          model="input"
+          :type="state.customInput.typeInput.value"
+          :blank="state.customInput.typeInput.blank"
+          label="FormKit Personalizado"
+          :placeholder="state.customInput.placeholder"
+          :max-length="state.customInput.maxLength"
+          @can-send="(value: boolean) => state.formFields.inputTextarea = value"
+        ></FormKit>
+      </aside>
     </div>
   </div>
 </template>
@@ -146,6 +209,16 @@ interface State {
   inputNumber: number;
   inputSelect: string;
   inputTextarea: string;
+  customInput: {
+    vModel: string;
+    typeInput: {
+      types: string[];
+      value: string;
+      blank: boolean;
+    };
+    placeholder: string;
+    maxLength: number;
+  },
   formFields: {
     [key: string]: any;
   };
@@ -154,8 +227,18 @@ interface State {
 const state: State = reactive({
   inputText: "",
   inputNumber: 0,
-  inputSelect: "",
+  inputSelect: "1",
   inputTextarea: "",
+  customInput: {
+    vModel: "",
+    typeInput: {
+      types: ['text', 'number', 'date', 'password'],
+      value: "",
+      blank: false,
+    },
+    placeholder: "",
+    maxLength: 255,
+  },
   formFields: {
     inputText: false,
     inputNumber: false,

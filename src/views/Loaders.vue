@@ -5,11 +5,12 @@
       title="Loader" 
       content="
         Os componentes loaders são de fácil utilização. Abaixo você verá como implementar esse componente. <br><br>
+        <b> ** Propriedades em negrito são obrigatórias **</b> <br><br>
 
         1. Props:
           <ul>
             <li>
-              is-loading(boolean): Dentro da sua página, você precisa definir uma variável booleana para indicar se o loader está 
+              <b>is-loading(boolean)</b>: Dentro da sua página, você precisa definir uma variável booleana para indicar se o loader está 
               ativado ou não.
             </li>
             <li>
@@ -36,17 +37,17 @@
           <WheelLoader 
             class="w-100"
             :is-loading="state.wheelLoaderIsLoading" 
-            :timeout="3"
             @timeout-ended="state.wheelLoaderIsLoading = $event"
           ></WheelLoader>
         </div>
 
-        <div class="w-75">
+        <aside class="w-75">
           <Code 
             filename="WheelLoader" 
-            component-path="alerts/WheelLoader"
+            component-path="src/assets/files/WheelLoader.txt"
+            language="html"
           ></Code>
-        </div>
+        </aside>
       </div>
       
     </section>
@@ -55,15 +56,19 @@
       <h5>CircleLoader</h5>
       <div class="is-flex w-100 mt-2">
         <div class="is-flex is-justify-content-center w-25">
-          <CircleLoader></CircleLoader>
+          <CircleLoader
+            :is-loading="state.circleLoaderIsLoading" 
+            @timeout-ended="state.circleLoaderIsLoading = $event"
+          ></CircleLoader>
         </div>
 
-        <div class="w-75">
+        <aside class="w-75">
           <Code 
             filename="CircleLoader" 
-            component-path="alerts/CircleLoader"
+            component-path="src/assets/files/CircleLoader.txt"
+            language="html"
           ></Code>
-        </div>
+        </aside>
       </div>
     </section>
 
@@ -81,10 +86,12 @@ import { reactive } from 'vue';
 
 interface State {
   wheelLoaderIsLoading: boolean;
+  circleLoaderIsLoading: boolean;
 }
 
 
 const state: State = reactive({
-  wheelLoaderIsLoading: true
+  wheelLoaderIsLoading: true,
+  circleLoaderIsLoading: true,
 })
 </script>
