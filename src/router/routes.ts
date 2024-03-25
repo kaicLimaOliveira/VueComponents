@@ -54,15 +54,15 @@ const routes: RouteRecordRaw[] = [
       translatedName: 'FormKit'
     },
   },
-  {
-    path: '/:catchAll(.*)*',
-    name: 'NotFound',
-    component: () => import("../views/NotFound.vue"),
-    meta: {
-      enableNav: false,
-      translatedName: 'Não encontrado'
-    }
-  }
+  // {
+  //   path: '/:catchAll(.*)*',
+  //   name: 'NotFound',
+  //   component: () => import("../views/NotFound.vue"),
+  //   meta: {
+  //     enableNav: false,
+  //     translatedName: 'Não encontrado'
+  //   }
+  // }
 ];
 
 const router = createRouter({
