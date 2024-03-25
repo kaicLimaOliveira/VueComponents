@@ -133,9 +133,9 @@
     </div>
 
     <div class="is-flex my-4">
-      <section class="w-25">
+      <section>
         <div>
-          <label class="label">Escolha o tipo do input (prop => type)</label>
+          <label class="label">Escolha o tipo do input (type)</label>
           <div class="control">
             <label class="radio" v-for="inputType in state.customInput.typeInput.types">
               <input type="radio" :value="inputType" v-model="state.customInput.typeInput.value" />
@@ -145,7 +145,7 @@
         </div>
 
         <div class="my-5">
-          <label class="label">Aceita vazio (prop => blank)</label>
+          <label class="label">Aceita vazio (blank)</label>
           <div class="control">
             <label class="radio">
               <input 
@@ -167,9 +167,8 @@
           </div>
         </div>
 
-
         <div class="field my-5">
-          <label class="label">Máximo de caracteres</label>
+          <label class="label">Máximo de caracteres (max-length)</label>
           <div class="control">
             <input 
               v-model="state.customInput.maxLength" 
@@ -179,9 +178,97 @@
             />
           </div>
         </div>
+
+        <div class="my-5">
+          <label class="label">Input desabilitado (is-disabled)</label>
+          <div class="control">
+            <label class="radio">
+              <input 
+                type="radio" 
+                :value="true" 
+                v-model="state.customInput.isDisabled" 
+              />
+              Sim
+            </label>
+  
+            <label class="radio">
+              <input 
+                type="radio" 
+                :value="false" 
+                v-model="state.customInput.isDisabled" 
+              />
+              Não
+            </label>
+          </div>
+        </div>
+
+        <div class="my-5">
+          <label class="label">Ícone (icon)</label>
+          <div class="control is-flex is-flex-direction-column">
+            <label class="">
+              <input 
+                type="radio" 
+                value="circle-exclamation" 
+                v-model="state.customInput.icon" 
+              />
+              Circulo de exclamação
+            </label>
+  
+            <label class="">
+              <input 
+                type="radio" 
+                :value="['fab', 'wpforms']" 
+                v-model="state.customInput.icon" 
+              />
+              Formulário
+            </label>
+
+            <label class="">
+              <input 
+                type="radio" 
+                value="file-signature" 
+                v-model="state.customInput.icon" 
+              />
+              Arquivos
+            </label>
+          </div>
+        </div>
+
+        <div class="field my-5">
+          <label class="label">Texto auxiliar (help-text)</label>
+          <div class="control">
+            <input 
+              v-model="state.customInput.helpText" 
+              class="input" 
+              type="text" 
+              placeholder="Digite um texto auxiliar"
+            />
+          </div>
+        </div>
+
+        <div class="field my-5">
+          <label class="label">Popover (popover)</label>
+          <div class="control">
+            <input 
+              v-model="state.customInput.popover" 
+              class="input" 
+              type="text" 
+              placeholder="Digite o texto do popover"
+            />
+          </div>
+        </div>
       </section>
 
-      <aside class="w-75">
+      <aside class="w-75 ml-6">
+        <Message
+          class="fs-11"
+          title="FormKit"
+          content="
+            O FormKit é totalmente personalizável. Ao lado, você verá uma implementação de suas propriedades, 
+            assim como as mensagens de erro dele.
+          "
+        ></Message>
+
         <FormKit
           v-model.trim="state.customInput.vModel"
           model="input"
@@ -190,6 +277,10 @@
           label="FormKit Personalizado"
           :placeholder="state.customInput.placeholder"
           :max-length="state.customInput.maxLength"
+          :is-disabled="state.customInput.isDisabled"
+          :help-text="state.customInput.helpText"
+          :popover="state.customInput.popover"
+          :icon="state.customInput.icon"
           @can-send="(value: boolean) => state.formFields.inputTextarea = value"
         ></FormKit>
       </aside>
@@ -218,6 +309,10 @@ interface State {
     };
     placeholder: string;
     maxLength: number;
+    isDisabled: boolean;
+    popover: string;
+    helpText: string;
+    icon: string;
   },
   formFields: {
     [key: string]: any;
@@ -238,6 +333,10 @@ const state: State = reactive({
     },
     placeholder: "",
     maxLength: 255,
+    isDisabled: false,
+    popover: "",
+    helpText: "",
+    icon: "",
   },
   formFields: {
     inputText: false,

@@ -1,8 +1,13 @@
 <template>
-  <article class="message" :class="props.className">
+  <article v-if="state.openedMessage" class="message ts-3" :class="props.className">
     <div v-if="props.messageHeader" class="message-header">
       <p>{{ props.title }}</p>
-      <button v-if="props.closedOption" class="delete" aria-label="delete"></button>
+      <button 
+        v-if="props.closedOption" 
+        @click="state.openedMessage = false"
+        class="delete" 
+        aria-label="delete"
+      ></button>
     </div>
 
     <div v-html="props.content" class="message-body">
@@ -11,6 +16,17 @@
 </template>
 
 <script setup lang="ts">
+import { reactive } from 'vue';
+
+
+interface State {
+  openedMessage: boolean;
+}
+
+const state: State = reactive({
+  openedMessage: true,
+})
+
 
 interface Props {
   title: string;

@@ -46,7 +46,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
   yarn
 
   #Para executar o projeto
-  yarn serve
+  yarn dev
 
 ```
 
