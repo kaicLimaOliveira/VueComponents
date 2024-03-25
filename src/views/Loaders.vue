@@ -44,7 +44,7 @@
         <aside class="w-75">
           <Code 
             filename="WheelLoader" 
-            component-path="src/assets/files/WheelLoader.txt"
+            component-path="/files/WheelLoader.txt"
             language="html"
           ></Code>
         </aside>
@@ -65,7 +65,7 @@
         <aside class="w-75">
           <Code 
             filename="CircleLoader" 
-            component-path="src/assets/files/CircleLoader.txt"
+            component-path="/files/CircleLoader.txt"
             language="html"
           ></Code>
         </aside>

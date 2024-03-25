@@ -35,7 +35,7 @@
           <Code 
             filename="alertStore.ts" 
             language="javascript"
-            component-path="src/assets/files/alertStore.txt"
+            component-path="/files/alertStore.txt"
           ></Code>
         </aside>
       </div>

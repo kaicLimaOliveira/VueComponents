@@ -125,7 +125,7 @@
       <aside class="pl-6 w-75">
         <Code 
           language="html"
-          component-path="src/assets/files/FormKit.txt" 
+          component-path="/files/FormKit.txt" 
           filename="FormKit.vue"
           :height="480"
         ></Code>
