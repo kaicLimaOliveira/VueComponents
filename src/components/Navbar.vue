@@ -126,6 +126,12 @@ const state: State = reactive({
           label: 'FormKit',
           icon: ['fab', 'wpforms'],
         },
+        {
+          type: 'link',
+          routeName: 'DebounceInput',
+          label: 'Debounce',
+          icon: 'magnifying-glass',
+        },
       ],
     },
   ]

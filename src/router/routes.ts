@@ -55,6 +55,15 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: "/debounce-input",
+    name: "DebounceInput",
+    component: () => import("../views/DebounceInput.vue"),
+    meta: {
+      enableNav: true,
+      translatedName: 'DebounceInput'
+    },
+  },
+  {
     path: '/:catchAll(.*)*',
     name: 'NotFound',
     component: () => import("../views/NotFound.vue"),

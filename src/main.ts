@@ -17,6 +17,8 @@ import {
     faCircleCheck,
     faChevronRight,
     faFileSignature,
+    faEllipsisV,
+    faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons"
  
 import {
@@ -32,7 +34,9 @@ library.add(
     faCircleCheck,
     faChevronRight,
     faFileSignature,
- 
+    faEllipsisV,
+    faMagnifyingGlass,
+    
     faWpforms,
 )
 
