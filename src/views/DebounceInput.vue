@@ -45,7 +45,14 @@
           <DebounceInput
             :has-details-icon="true"
             :details-data="['Título', 'Nome']"
+            @update:model-value="state.search = $event"
           ></DebounceInput>
+
+          <ul>
+            <li v-for="searched in filterData">
+              {{ searched }}
+            </li>
+          </ul>
         </div>
   
         <aside class="w-75 pl-6">
@@ -65,4 +72,40 @@
 import Code from '../components/Code.vue';
 import DebounceInput from '../components/forms/DebounceInput.vue';
 import Message from '../components/Message.vue';
+
+import { computed, reactive } from 'vue';
+
+
+interface State {
+  search: string;
+  listSearch: object[];
+}
+
+const state: State = reactive({
+  search: "",
+  listSearch: [
+    {
+      title: 'Primeiro título',
+      content: 'Conteudo um',
+    },
+    {
+      title: 'Segundo título',
+      content: '',
+    },
+    {
+      title: 'Terceiro título',
+      content: 'Terceiro conteudo',
+    },
+  ]  
+})
+
+
+const filterData = computed(() => {
+  return state.listSearch.filter((res) => {
+    return Object.values(res)
+      .toString()
+      .toUpperCase()
+      .includes(state.search.toUpperCase());
+  })
+})
 </script>

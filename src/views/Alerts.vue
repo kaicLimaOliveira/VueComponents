@@ -68,21 +68,18 @@
 </template>
 
 <script setup lang="ts">
-import AlertSimple from "../components/alerts/AlertSimple.vue";
+import AlertSimple from '../components/alerts/AlertSimple.vue';
 import Code from '../components/Code.vue';
 import Message from '../components/Message.vue';
-import ProgressAlert from "../components/alerts/ProgressAlert.vue";
+import ProgressAlert from '../components/alerts/ProgressAlert.vue';
 
-import { useAlertStore } from "../stores/alertStore";
-import { onMounted } from "vue";
+import { useAlertStore } from '../stores/alertStore';
+import { onMounted } from 'vue';
 
 
 const alertStore = useAlertStore()
 
 onMounted(async () => {
-  // const component = ProgressAlert?.render()
-  // console.log(component);
-  
   alertStore.alerts = [{
     title: "Título do alerta",
     content: "Esse é um exemplo de alerta",
