@@ -158,6 +158,7 @@ watch(
   transition: .12s;
   padding: 10px 12px;
   margin: 0px 0px 5px;
+  background-color: #ebebeb;
   color: rgb(92, 92, 92);
  
   &:hover {
@@ -207,7 +208,6 @@ watch(
 }
  
 .links-container-bg {
-  background-color: rgba(190, 190, 190, 0.17);
   transform: translateX(0)
 }
  
