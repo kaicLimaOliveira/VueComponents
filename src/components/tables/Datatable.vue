@@ -1,0 +1,391 @@
+<template>
+  <div class="is-flex is-flex-direction-column w-100 box">
+    <slot></slot>
+    <div class="is-flex is-justify-content-space-between mb-3">
+
+      <div class="is-flex is-align-items-center">
+        <DebounceInput 
+          :has-details-icon="true" 
+          :details-label="props.searchInputDetailsLabel"
+          :details-data="props.searchInputDetailsData" 
+          @update:modelValue="state.search = $event"
+        ></DebounceInput>
+  
+        <div v-if="showChangeItemsPerPage" class="has-text-weight-medium ml-3">
+          <label class="is-flex is-align-items-center">Mostrar 
+            <select 
+              v-model="state.itemsPerPage"
+              class="button mx-2 px-2" 
+            >
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+            </select>
+          </label>
+        </div>  
+      </div>
+
+      <div class="is-flex">
+        <div class="is-flex is-align-items-center" v-if="props.enableDateFilter">
+          <!-- <DatePicker :start-date="dateFilterStart" @update:model-value="state.date = $event"></DatePicker> -->
+        </div>
+        <button v-if="enableFiltering" class="button is-light-green has-text-weight-medium ml-3"
+          @click="emit('filterData', state.date)">Filtrar</button>
+      </div>
+
+    </div>
+
+    <div class="table-container">
+      <table v-show="!state.isLoading" class="table is-fullwidth has-text-left"
+        :class="[{ 'is-bordered': isBordered, 'is-hoverable': isHoverable, 'is-striped': isStriped }, `table-padding-${tablePadding}`]">
+        <thead>
+          <tr>
+            <th v-for="header, key in computedHeaders" :key="key">
+              {{ header }}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr 
+            v-for="column, key in list[state.page - 1]" 
+            :key="key"
+            v-show="column !== undefined"
+          >
+            <td 
+              v-for="row, tdKey in column" 
+              :key="tdKey" 
+              v-show="tdKey != 0" 
+              class="vertical-align-middle is-clickable break-word"
+              @click="selectItem((column)[0], 'view')"
+            >
+              <div v-if="row.html !== undefined" v-html="row.html"></div>
+              <div v-else>{{ row }}</div>
+            </td>
+            
+            <td v-if="props.enableUpdate || props.enableDelete" class="vertical-align-middle">
+              <Icon 
+                v-if="props.enableUpdate" 
+                class="is-clickable has-text-link mr-4" 
+                icon="edit"
+                @click="selectItem((column)[0], 'update')"
+              ></Icon>
+
+              <Icon v-if="props.enableDelete" class="is-clickable has-text-danger" icon="times-circle"
+                @click="selectItem((column)[0], 'delete')">
+              </Icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div v-show="state.isLoading" class="anim-container mb-5">
+        <div class="is-flex">
+          <div class="table-loader-anim is-flex-grow-1 mb-1 mr-1"></div>
+          <div class="table-loader-anim is-flex-grow-1 mb-1 mr-1"></div>
+          <div class="table-loader-anim is-flex-grow-1 mb-1"></div>
+        </div>
+        <div class="is-flex">
+          <div class="table-loader-anim is-flex-grow-1 mb-1 mr-1"></div>
+          <div class="table-loader-anim is-flex-grow-1 mb-1 mr-1"></div>
+          <div class="table-loader-anim is-flex-grow-1 mb-1"></div>
+        </div>
+        <div class="is-flex">
+          <div class="table-loader-anim is-flex-grow-1 mb-1 mr-1"></div>
+          <div class="table-loader-anim is-flex-grow-1 mb-1 mr-1"></div>
+          <div class="table-loader-anim is-flex-grow-1 mb-1"></div>
+        </div>
+      </div>
+
+      <div v-show="state.data.length == 0 && !state.isLoading">
+        <span>Nenhum dado disponível...</span>
+      </div>
+    </div>
+
+    <div class="is-flex has-text-weight-bold">
+      Total de {{ state.data.length }} ite
+      <span v-if="state.data.length != 1">ns</span>
+      <span v-else>m</span>.
+    </div>
+
+    <Pagination v-model="state.page" :pages="tablePages" :showButtonsOnBounderies="props.showButtonsOnBounderies" />
+  </div>
+</template>
+
+<script setup lang="ts">
+// import DatePicker from "./Datepicker.vue";
+import DebounceInput from "../forms/DebounceInput.vue";
+import Pagination from "./Pagination.vue";
+
+import { reactive, computed, watch, onMounted } from "vue";
+// import { integerMask } from "../composables/Masks";
+import { Generic } from "../../interfaces/Generic";
+
+interface Props {
+  headers: Generic<string>;
+  data: Generic<any>[];
+  queryParams?: any;
+  itemsPerPage: number;
+  enableUpdate?: boolean;
+  enableDelete?: boolean;
+  idFieldName?: string;
+  isLoading?: boolean;
+  loadingDelay?: number;
+  isBordered?: boolean;
+  isStriped?: boolean;
+  isHoverable?: boolean;
+  tablePadding?: number;
+  showButtonsOnBounderies?: boolean;
+  enableFiltering?: boolean;
+  enableDateFilter?: boolean;
+  dateFilterStart?: Date;
+  searchInputDetailsLabel?: string;
+  searchInputDetailsData?: string[];
+  showChangeItemsPerPage?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  queryParams: {},
+  itemsPerPage: 10,
+  enableUpdate: true,
+  enableDelete: true,
+  idFieldName: 'id',
+  isLoading: false,
+  loadingDelay: 400,
+  isBordered: false,
+  isStriped: true,
+  isHoverable: true,
+  tablePadding: 3,
+  showButtonsOnBounderies: true,
+  enableFiltering: false,
+  enableDateFilter: false,
+  dateFilterStart: (_props) => new Date(),
+  searchInputDetailsLabel: 'Você pode filtrar os seguintes campos:',
+  showChangeItemsPerPage: true,
+})
+
+
+const emit = defineEmits<{
+  "filterData": [value: [Date, Date] ],
+  "dateValue": [value: [Date, Date] ],
+  "view": [value: object ],
+  "update": [value: object ],
+  "delete": [value: object ],
+  "currentPage": [value: number ],
+}>()
+
+
+interface State {
+  date: [Date, Date]
+  search: string;
+  data: Generic<any>[];
+  page: number;
+  isLoading: boolean;
+  itemsPerPage: number;
+}
+
+
+const state: State = reactive({
+  date: [new Date(), new Date()],
+  search: '',
+  data: [],
+  page: 1,
+  isLoading: false,
+  itemsPerPage: 10,
+})
+
+
+onMounted(() => {
+  state.itemsPerPage = props.itemsPerPage
+  state.data = props.data
+})
+
+
+const list = computed(() => {
+
+  let pagesList: any[][][] = []
+  let columnList = []
+
+  for (let i = 0; i < state.data.length; i++) {
+
+    const el = state.data[i];
+    let rowList = []
+
+    if (el === undefined) {
+      columnList.push(el)
+      continue
+    }
+
+    if (el.hasOwnProperty(props.idFieldName)) {
+      rowList.unshift(el[props.idFieldName])
+    }
+
+    for (const h in props.headers) {
+      Object.entries(el).forEach(([key, value]) => {
+        if (h == key) {
+          return rowList.push(value)
+        }
+      })
+    }
+
+    columnList.push(rowList)
+  }
+
+  let pagesLength = Math.ceil(columnList.length / state.itemsPerPage)
+  for (let i = 0; i < pagesLength; i++) {
+    pagesList.push(columnList.splice(0, state.itemsPerPage))
+  }
+
+  return pagesList
+})
+
+
+const computedHeaders = computed(() => {
+  (props.enableUpdate || props.enableDelete) ? props.headers['options'] = 'Opções' : props.headers
+  return props.headers
+})
+
+
+watch(
+  () => props.isLoading,
+  async (newValue) => {
+
+    state.isLoading = true
+
+    await new Promise(() => {
+      setTimeout(() => {
+
+        if (newValue === false)
+          state.isLoading = false
+
+      }, props.loadingDelay)
+    })
+  }
+)
+
+
+const offset = computed(() => (state.page - 1) * state.itemsPerPage)
+const tablePages = computed(() =>  Math.ceil(state.data.length / state.itemsPerPage))
+
+
+watch(
+  () => state.page,
+  (newValue) => {
+
+    emit('currentPage', newValue)
+    if (state.data.length <= offset.value) 
+      state.data.length = offset.value + state.itemsPerPage
+  }
+)
+
+
+watch(
+  () => state.date,
+  (newDate, oldDate) => {
+
+    if (!oldDate) {
+      emit('dateValue', newDate)
+      return
+    }
+
+    const [nSt, nEd] = newDate
+    const [oSt, oEd] = oldDate
+
+    if (nSt.toLocaleDateString() != oSt.toLocaleDateString() || nEd.toLocaleDateString() != oEd.toLocaleDateString()) {
+      emit('dateValue', newDate)
+    }
+  }
+)
+
+
+watch(
+  () => state.search,
+  () => {
+    state.data = props.data.filter((res) => {
+      return Object.values(res)
+        .toString()
+        .toUpperCase()
+        .includes(state.search.toUpperCase());
+    })
+  }
+)
+
+watch(
+  () => state.data.length,
+  (newValue) => {
+
+    const limit = Math.ceil(newValue / state.itemsPerPage)
+    if (limit < state.page && state.page != 1) {
+      state.page--
+    }
+  }
+)
+
+function selectItem(id: number, emitOption: any) {
+  const selectedItem = state.data.find((res) => res.id === id);
+  if (selectedItem) {
+    emit(emitOption, selectedItem)
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.table-padding-1 th,
+.table-padding-1 td {
+  padding: 0.25em 0.5em;
+}
+
+.table-padding-2 th,
+.table-padding-2 td {
+  padding: 0.35em 0.65em;
+}
+
+.table-padding-3 th,
+.table-padding-3 td {
+  padding: 0.5em 0.75em;
+}
+
+.table-padding-4 th,
+.table-padding-4 td {
+  padding: 0.75em 1em;
+}
+
+.anim-container {
+  height: 4rem;
+  position: relative;
+}
+
+.table-loader-anim {
+  background-color: rgba(128, 128, 128, 0.199);
+  min-width: 100px;
+  height: 25px;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.table-loader-anim::after {
+  content: '';
+  background-color: rgba(255, 255, 255, 0.719);
+  width: 30px;
+  height: 150%;
+  position: absolute;
+  filter: blur(20px);
+  top: 50%;
+  left: -10%;
+  transform: translateY(-50%);
+  animation: table-loader-anim .7s infinite ease-in-out;
+}
+
+@keyframes table-loader-anim {
+  0% {
+    left: -10%;
+  }
+
+  100% {
+    left: 110%;
+  }
+}
+</style>

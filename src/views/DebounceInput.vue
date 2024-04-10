@@ -10,7 +10,7 @@
         1. Props:
           <ul>
             <li>
-              placeholder(string): Essa é a propriedade padrão dos inputs do HTML..
+              placeholder(string): Essa é a propriedade padrão dos inputs do HTML.
             </li>
             <li>
               delay(number): Esta propriedade define o tempo de atraso até que a pesquisa seja realizada.
@@ -32,7 +32,7 @@
         2. Emits:
           <ul>
             <li>
-              update:model-value(string): .
+              update:model-value(string): Emite um valor filtrado do que o usuário digitou, após o tempo de espera do debounce.
             </li>
           </ul>
       " 
@@ -52,12 +52,18 @@
             @update:model-value="delayModelValue($event)"
           ></DebounceInput>
 
-          <ul v-if="!state.isLoading">
-            <li v-for="searched in filterData" class="is-flex is-flex-direction-column my-3">
-              <span>Id: {{ searched.id }}</span>
-              <span>Primeiro nome: {{ searched.firstName }}</span>
-              <span>Último nome: {{ searched.lastName }}</span>
-              <span>E-mail: {{ searched.email }}</span>
+          <ul v-if="!state.isLoading" class="ml-0">
+            <li v-for="searched, index in filterData" class="is-flex my-3">
+              <div>
+                <span class="mr-2">{{ index + 1 }}:</span>
+              </div>
+              <div class="is-flex is-flex-direction-column">
+                <span><b>Id:</b> {{ searched.id }}</span>
+                <span><b>Primeiro nome:</b> {{ searched.firstName }}</span>
+                <span><b>Último nome:</b> {{ searched.lastName }}</span>
+                <span><b>E-mail:</b> {{ searched.email }}</span>
+              </div>
+              
             </li>
           </ul>
 

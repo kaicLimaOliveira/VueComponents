@@ -19,6 +19,11 @@ import {
     faFileSignature,
     faEllipsisV,
     faMagnifyingGlass,
+    faEdit,
+    faTimesCircle,
+    faSortUp,
+    faSortDown,
+    faSort,
 } from "@fortawesome/free-solid-svg-icons"
  
 import {
@@ -36,6 +41,11 @@ library.add(
     faFileSignature,
     faEllipsisV,
     faMagnifyingGlass,
+    faEdit,
+    faTimesCircle,
+    faSortUp,
+    faSortDown,
+    faSort,
     
     faWpforms,
 )

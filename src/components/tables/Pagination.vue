@@ -1,0 +1,156 @@
+<template>
+  <div class="is-flex is-justify-content-center">
+    <div class="is-flex is-align-items-center mr-1">
+      <button 
+        class="button"
+        :class="!isPrevControlsActive && !showButtonsOnBounderies ? 'is-invisible' : 'control-items-active'"
+        @click="goToPrev"
+      >
+        Anterior
+      </button>
+    </div>
+
+    <div class="is-flex">
+      <span v-for="page, key in pagination" :key="key">
+        <button 
+          v-if="page" 
+          class="page p-3 m-1 is-clickable" 
+          type="button" 
+          :aria-label="`Page ${page}`"
+          :class="{ 'page-active': isActive(page) }"
+          :style="`background-color: ${isActive(page) ? '' : 'transparent'};`" @click="updatePageHandler(page)"
+        >
+          {{ page }}
+        </button>
+      </span>
+    </div>
+
+    <div class="is-flex is-align-items-center ml-1">
+      <button 
+        class="button"
+        :class="!isNextControlsActive && !showButtonsOnBounderies ? 'is-invisible' : 'control-items-active'"
+        @click="goToNext"
+      >
+        Próximo
+      </button>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed } from "vue";
+
+interface PaginationProps {
+  pages: number;
+  modelValue: number;
+  rangeSize?: number;
+  showButtonsOnBounderies: boolean;
+}
+
+const props = withDefaults(defineProps<PaginationProps>(), {
+  pages: 0,
+  rangeSize: 1,
+  modelValue: 0,
+  showButtonsOnBounderies: false,
+})
+
+const emit = defineEmits<{
+  "update:modelValue": [value: number ]
+}>()
+const isActive = (page: number) => page === props.modelValue;
+
+
+const pagination = computed(() => {
+  const res: (number | null)[] = [];
+  const minPaginationElems = 5 + props.rangeSize * 2;
+
+  let rangeStart = props.pages <= minPaginationElems ? 1 : props.modelValue - props.rangeSize;
+  let rangeEnd = props.pages <= minPaginationElems ? props.pages : props.modelValue + props.rangeSize;
+
+  rangeEnd = Math.min(rangeEnd, props.pages);
+  rangeStart = Math.max(rangeStart, 1);
+
+  if (props.pages > minPaginationElems) {
+    const isStartBoundaryReached = rangeStart - 1 < 3;
+    const isEndBoundaryReached = props.pages - rangeEnd < 3;
+
+    if (isStartBoundaryReached) {
+      rangeEnd = minPaginationElems - 2;
+      for (let i = 1; i < rangeStart; i++) {
+        res.push(i);
+      }
+    } else {
+      res.push(1, null);
+    }
+
+    if (isEndBoundaryReached) {
+      rangeStart = props.pages - (minPaginationElems - 3);
+      for (let i = rangeStart; i <= props.pages; i++) {
+        res.push(i);
+      }
+    } else {
+      for (let i = rangeStart; i <= rangeEnd; i++) {
+        res.push(i);
+      }
+      res.push(null, props.pages);
+    }
+  } else {
+    for (let i = rangeStart; i <= rangeEnd; i++) {
+      res.push(i);
+    }
+  }
+
+  return res;
+});
+
+const isPrevControlsActive = computed(() => props.modelValue > 1);
+const isNextControlsActive = computed(() => props.modelValue < props.pages);
+
+
+function updatePageHandler(params: number) {
+  emit("update:modelValue", params);
+}
+
+
+function goToPrev() {
+  if (isPrevControlsActive.value) 
+    emit("update:modelValue", props.modelValue - 1);
+}
+
+
+function goToNext() {
+  if (isNextControlsActive.value) 
+    emit("update:modelValue", props.modelValue + 1);
+}
+</script>
+
+<style scoped lang="scss">
+.control-items-active {
+  fill: #000;
+  transition: fill 0.2s ease-in-out;
+
+  &:hover {
+    fill: #000;
+    transition: fill 0.2s ease-in-out;
+  }
+}
+
+.page {
+  background-color: #ebe9e9;
+  border: 1px solid hsl(0, 0%, 86%);
+  color: #3f4244;
+  min-width: 2rem;
+  transition: box-shadow 0.2s;
+  border-radius: 4px;
+  transition: .17s;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  &-active {
+    background-color: var(--link) !important;
+    color: #fff;
+  }
+}
+</style>
