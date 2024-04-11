@@ -29,13 +29,16 @@
 </template>
 
 <script setup lang="ts">
+const emit = defineEmits<{
+  (event: "close-modal"): void,
+}>()
 
-const emit = defineEmits(['close-modal'])
+interface Props {
+  open: boolean;
+}
 
-const props = defineProps({
-  open: {
-    type: Boolean
-  }
+const props = withDefaults(defineProps<Props>(), {
+  open: false,
 })
 
 </script>

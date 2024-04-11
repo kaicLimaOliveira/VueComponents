@@ -115,6 +115,12 @@ const state: State = reactive({
       icon: 'spinner',
     },
     {
+      type: 'link',
+      routeName: 'Modals',
+      label: 'Modals',
+      icon: 'window-restore',
+    },
+    {
       type: 'dropdown',
       routeName: '',
       label: 'Forms',

@@ -46,6 +46,15 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: "/modais",
+    name: "Modals",
+    component: () => import("../views/Modals.vue"),
+    meta: {
+      enableNav: true,
+      translatedName: 'Modais'
+    },
+  },
+  {
     path: "/form-kit",
     name: "FormKit",
     component: () => import("../views/FormsKit.vue"),

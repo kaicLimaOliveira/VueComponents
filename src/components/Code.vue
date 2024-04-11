@@ -124,8 +124,9 @@ async function copyCode() {
 pre {
   margin-bottom: 0 !important;
   background-color: #efefef;
-  overflow-y: hidden;
+  overflow-x: hidden;
   transition: all ease-in-out 0.3s;
+  max-height: 1000px;
 
   &::-webkit-scrollbar {
     display: none;

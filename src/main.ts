@@ -24,6 +24,7 @@ import {
     faSortUp,
     faSortDown,
     faSort,
+    faWindowRestore,
 } from "@fortawesome/free-solid-svg-icons"
  
 import {
@@ -46,6 +47,7 @@ library.add(
     faSortUp,
     faSortDown,
     faSort,
+    faWindowRestore,
     
     faWpforms,
 )
