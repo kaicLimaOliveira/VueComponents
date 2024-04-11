@@ -43,7 +43,7 @@
 
         <aside class="w-75">
           <Code 
-            filename="WheelLoader" 
+            filename="WheelLoader.vue" 
             component-path="/files/WheelLoader.txt"
             language="html"
           ></Code>
@@ -64,7 +64,7 @@
 
         <aside class="w-75">
           <Code 
-            filename="CircleLoader" 
+            filename="CircleLoader.vue" 
             component-path="/files/CircleLoader.txt"
             language="html"
           ></Code>

@@ -74,46 +74,70 @@
 
     <section class="mt-4">
       <div class="is-flex is-flex-direction-row">
-        <div class="w-100">
-          <Datatable
-            :headers="headers" 
-            :data="state.data" 
-            :items-per-page="10"
-            @view="state.selectedItem = ($event as Faker), state.crudModal.open = true"
-            @update="state.selectedItem = ($event as Faker)"
-            @delete="state.selectedItem = ($event as Faker)"
-          ></Datatable>
+        <div class="w-25">
+          <Message
+            class="fs-13"
+            title="Datatables" 
+            content="
+              Abaixo temos uma tabela que faz conexão com o componente Modal.
+            "
+          ></Message>
         </div>
 
-        <div class="w-50 ml-4">
+        <div class="w-75 ml-4">
           <Code 
             filename="Datatable.vue" 
             component-path="/files/Datatable.txt"
             language="html"
-            :height="650"
+            :height="350"
           ></Code>
         </div>
       </div>
 
+      <Datatable
+        :headers="headers" 
+        :data="state.data" 
+        :items-per-page="10"
+        @view="selectedItem($event, 'view')"
+        @update="selectedItem($event, 'update')"
+        @delete="selectedItem($event, 'delete')"
+      >
+        <div class="is-flex is-justify-content-space-between is-align-items-center mb-2">
+          <h4 class="mb-0">Datatables</h4>
+          <button @click="selectedItem({}, 'create')" class="button">Cadastrar</button>
+        </div>
+      </Datatable>
+
       <Teleport to="#app">
-        <CRUDModal :open="state.crudModal.open" :view-mode="state.crudModal.mode" @close-modal="state.crudModal.open = false">
+        <CRUDModal 
+          :open="state.crudModal.open" 
+          :view-mode="state.crudModal.mode" 
+          :action-middleware="actionMiddleware"
+          @close-modal="state.crudModal.open = false"
+        >
+          <template #header>
+            Usuários
+          </template>
+
           <template #body>
             <FormKit
+              v-if="state.crudModal.mode !== 'create'"
               v-model.trim="state.selectedItem.id"
               model="input"
               label="Id"
               placeholder="Id"
-              :is-disabled="state.crudModal.mode !== 'create'"
+              is-disabled
               :max-length="50"
             ></FormKit>
 
             <div class="is-flex">
               <FormKit
+                class="pr-2"
                 v-model.trim="state.selectedItem.firstName"
                 model="input"
                 label="Primeiro nome"
                 placeholder="Primeiro nome"
-                :is-disabled="state.crudModal.mode !== 'create'"
+                :is-disabled="state.crudModal.mode === 'view'"
                 :max-length="40"
               ></FormKit>
 
@@ -122,7 +146,7 @@
                 model="input"
                 label="Último nome"
                 placeholder="Último nome"
-                :is-disabled="state.crudModal.mode !== 'create'"
+                :is-disabled="state.crudModal.mode === 'view'"
                 :max-length="40"
               ></FormKit>
             </div>
@@ -132,14 +156,13 @@
               model="input"
               label="E-mail"
               placeholder="E-mail"
-              :is-disabled="state.crudModal.mode !== 'create'"
+              :is-disabled="state.crudModal.mode === 'view'"
               :max-length="40"
             ></FormKit>
           </template>
         </CRUDModal>
       </Teleport>
     </section>
-    
   </div>
 </template>
 
@@ -152,6 +175,7 @@ import Message from "../components/Message.vue";
 
 import { reactive } from "vue";
 import { Faker, randomDataFaker } from "../utils/faker";
+import { Generic } from "../interfaces/Generic";
 
 
 interface State {
@@ -183,4 +207,80 @@ const headers = {
   email: 'E-mail',
 }
 
+
+const actionMiddleware = async (funcName: string) => {
+  const functions: Generic<any> = {
+    create: {
+      func: createItem,
+      params: [{
+        id: String(Date.now()),
+        firstName: state.selectedItem.firstName,
+        lastName: state.selectedItem.lastName,
+        email: state.selectedItem.email,
+      }],
+      trigger: (event: boolean) => {
+        if (event) {
+          state.crudModal.open = false;
+        }
+      }
+    },
+    update: {
+      func: updateItem,
+      params: [state.selectedItem.id, {
+        firstName: state.selectedItem.firstName,
+        lastName: state.selectedItem.lastName,
+        email: state.selectedItem.email,
+      }],
+      trigger: (event: boolean) => {
+        if (event) {
+          state.crudModal.open = false
+        }
+      }
+    },
+    delete: {
+      func: deleteItem,
+      params: [state.selectedItem.id],
+      trigger: (event: boolean) => {
+        if (event) {
+          state.crudModal.open = false
+        }
+      }
+    }
+  }
+
+  const currentFunction = functions[funcName]
+  currentFunction.func(...currentFunction.params)
+  currentFunction.trigger(true)
+}
+
+
+function selectedItem(event: any, modeView: string) {
+  state.selectedItem = event
+  state.crudModal.mode = modeView
+  state.crudModal.open = true
+}
+
+
+function createItem(payload: Faker) {
+  state.data.push(payload)
+}
+
+
+function updateItem(id: string, payload: Faker) {
+  state.data.forEach(item => {
+    if (item.id == id) {
+      item = payload
+    }
+  })
+}
+
+
+function deleteItem(id: string) {
+  state.data.forEach(item => {
+    if (item.id == id) {
+      const index = state.data.indexOf(item)
+      state.data.splice(index, 1)
+    }
+  })
+}
 </script>

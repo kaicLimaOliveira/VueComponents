@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-4">
+  <div class="mb-4 w-100">
     <div class="field mb-0">
       <div class="is-flex is-align-items-center">
         <label class="label">{{ props.label }}</label>

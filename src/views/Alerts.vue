@@ -39,9 +39,9 @@
 
         <aside class="w-75 pl-6">
           <Code 
-            language="html"
-            component-path="/files/AlertSimple.txt" 
             filename="AlertSimple.vue"
+            component-path="/files/AlertSimple.txt" 
+            language="html"
           ></Code>
         </aside>
       </div>
@@ -56,9 +56,9 @@
 
         <aside class="w-75 pl-6">
           <Code 
-            language="html"
-            component-path="/files/ProgressAlert.txt" 
             filename="ProgressAlert.vue"
+            component-path="/files/ProgressAlert.txt" 
+            language="html"
           ></Code>
         </aside>
       </div>

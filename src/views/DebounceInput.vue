@@ -72,7 +72,7 @@
   
         <aside class="w-75 pl-6">
           <Code 
-            filename="DebounceInput" 
+            filename="DebounceInput.vue" 
             component-path="/files/DebounceInput.txt"
             language="html"
             :height="500"
