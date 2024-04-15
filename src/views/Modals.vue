@@ -123,10 +123,10 @@
 <script setup lang="ts">
 import BasicModal from "../components/modals/BasicModal.vue";
 import CRUDModal from "../components/modals/CRUDModal.vue";
+import Code from "../components/Code.vue";
 import Message from "../components/Message.vue";
 
 import { reactive } from "vue";
-import Code from "../components/Code.vue";
 
 interface State {
   modal: boolean;
@@ -146,7 +146,6 @@ const state: State = reactive({
 
 
 function selectedItem(modeView: string) {
-  // state.selectedItem = event
   state.crudModal.mode = modeView
   state.crudModal.open = true
 }

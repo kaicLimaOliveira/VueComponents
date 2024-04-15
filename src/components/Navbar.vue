@@ -37,36 +37,11 @@
       </div>
     </aside>
    
-    <header class="content is-flex is-flex-direction-column is-flex-grow-1 vh-100 w-25">
+    <header class="content is-flex is-flex-direction-column is-flex-grow-1 vh-100 w-75">
       <div class="nav-content px-5 py-3 is-flex is-justify-content-space-between">
         <div class="is-flex is-align-items-center">
           <Icon icon="bars" @click="toggleSideBar" class="mr-5 is-clickable fs-19"></Icon>
         </div>
- 
-       
- 
-        <!-- <div class="is-flex is-align-items-center">
-          <div v-if="false" class="control has-icons-left mr-5">
-            <input
-              class="input ts-15"
-              type="text"
-              placeholder="Pesquisar..."
-              v-model="state.search"
-            >
-            <span class="icon is-left">
-              <icon icon="magnifying-glass" class="has-text-grey-light"></icon>
-            </span>
-          </div> -->
- 
-          <!-- <icon
-            @click="darkModeStore.toggleDarkMode()"
-            size="lg"
-            :icon="darkModeStore.isDarkModeOn ? 'sun' : 'moon'"
-            class="mr-5 is-clickable"
-          ></icon> -->
- 
-          <!-- <Options :enableDarkMode="true"></Options> -->
-        <!-- </div> -->
       </div>
  
       <nav class="h-100">
@@ -96,6 +71,12 @@ const state: State = reactive({
   isLoadingImage: false,
   currentLinkHovered: null,
   routerLinks: [
+    {
+      type: 'link',
+      routeName: 'Paginations',
+      label: 'Paginação',
+      icon: 'pager',
+    },
     {
       type: 'link',
       routeName: 'Datatables',
@@ -137,6 +118,12 @@ const state: State = reactive({
           routeName: 'DebounceInput',
           label: 'Debounce',
           icon: 'magnifying-glass',
+        },
+        {
+          type: 'link',
+          routeName: 'Select',
+          label: 'Select',
+          icon: 'hand-pointer',
         },
       ],
     },

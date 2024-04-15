@@ -1,16 +1,16 @@
 <template>
   <div class="is-flex is-flex-direction-column">
-    <h3>Vue Components</h3>
+    <h3 class="mb-0">Vue Components</h3>
     Projeto em andamento...
-    <div>
+    <div class="mt-3">
       <Message 
-        class="fs-13"
+        class="fs-14"
         title="Dependências do projeto"
         :content="`
           Dentro dos componentes, utilizamos diversas bibliotecas para obter resultados melhores ou facilitar o processo. Para garantir 
           que você aproveite ao máximo no projeto, instale as bibliotecas abaixo: <br><br>
           
-          <pre>dependencies: ${jsonFormatter.dependencies}, <br>devDependencies: ${jsonFormatter.devDependencies}</pre>
+          <pre>dependencies: ${jsonFormatter.dependencies}</pre>
         `"
         :closed-option="false"
       ></Message>

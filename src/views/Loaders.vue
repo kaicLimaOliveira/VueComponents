@@ -49,7 +49,6 @@
           ></Code>
         </aside>
       </div>
-      
     </section>
 
     <section class="mt-6">
@@ -71,7 +70,6 @@
         </aside>
       </div>
     </section>
-
   </div>
 </template>
 
@@ -80,7 +78,6 @@ import Code from '../components/Code.vue';
 import CircleLoader from '../components/loaders/CircleLoader.vue';
 import Message from '../components/Message.vue';
 import WheelLoader from '../components/loaders/WheelLoader.vue';
-
 import { reactive } from 'vue';
 
 

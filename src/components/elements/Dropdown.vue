@@ -126,8 +126,8 @@ watch(
   transition: .12s;
   font-family: 'Montserrat';
   padding: 10px 12px;
-  color: rgb(92, 92, 92) !important;
   background-color: #ebebeb;
+  color: var(--black-700);
  
   &:hover {
     background-color: var(--grey-600);
@@ -159,7 +159,7 @@ watch(
   padding: 10px 12px;
   margin: 0px 0px 5px;
   background-color: #ebebeb;
-  color: rgb(92, 92, 92);
+  color: var(--black-700);
  
   &:hover {
     background-color: var(--grey-600);

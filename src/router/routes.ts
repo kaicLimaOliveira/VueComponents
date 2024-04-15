@@ -19,6 +19,15 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: "/paginacoes",
+    name: "Paginations",
+    component: () => import("../views/Paginations.vue"),
+    meta: {
+      enableNav: true,
+      translatedName: 'Paginações'
+    },
+  },
+  {
     path: "/tabelas",
     name: "Datatables",
     component: () => import("../views/Datatables.vue"),
@@ -70,6 +79,15 @@ const routes: RouteRecordRaw[] = [
     meta: {
       enableNav: true,
       translatedName: 'DebounceInput'
+    },
+  },
+  {
+    path: "/select",
+    name: "Select",
+    component: () => import("../views/Selects.vue"),
+    meta: {
+      enableNav: true,
+      translatedName: 'Selects'
     },
   },
   {

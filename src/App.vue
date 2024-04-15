@@ -87,4 +87,4 @@ body {
 .dp__today {
   border: 1px solid #5f76e8 !important;
 }
-</style>./components/loaders/Loader.vue
+</style>

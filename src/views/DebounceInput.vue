@@ -80,7 +80,6 @@
         </aside>
       </div>
     </section>
-    
   </div>
 </template>
 

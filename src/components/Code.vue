@@ -126,7 +126,7 @@ pre {
   background-color: #efefef;
   overflow-x: hidden;
   transition: all ease-in-out 0.3s;
-  max-height: 1000px;
+  max-height: 800px;
 
   &::-webkit-scrollbar {
     display: none;

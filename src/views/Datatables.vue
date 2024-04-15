@@ -73,8 +73,9 @@
     ></Message>
 
     <section class="mt-4">
-      <div class="is-flex is-flex-direction-row">
-        <div class="w-25">
+      <h5>Datatable</h5>
+      <div class="is-flex">
+        <div class="pr-2">
           <Message
             class="fs-13"
             title="Datatables" 
@@ -84,7 +85,7 @@
           ></Message>
         </div>
 
-        <div class="w-75 ml-4">
+        <div class="w-100">
           <Code 
             filename="Datatable.vue" 
             component-path="/files/Datatable.txt"
