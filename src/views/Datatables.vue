@@ -85,7 +85,7 @@
           ></Message>
         </div>
 
-        <div class="w-100">
+        <div class="w-75 is-flex-grow-1">
           <Code 
             filename="Datatable.vue" 
             component-path="/files/Datatable.txt"

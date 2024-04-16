@@ -12,17 +12,19 @@
 
     <div class="is-flex">
       <span v-for="page, key in pagination" :key="key">
-        <button 
-          v-if="page" 
-          class="page p-3 m-1 is-clickable" 
-          type="button" 
-          :aria-label="`Page ${page}`"
-          :class="{ 'page-active': isActive(page) }"
-          :style="`background-color: ${isActive(page) ? '' : 'transparent'};`" @click="updatePageHandler(page)"
-        >
-          {{ page }}
-        </button>
-      </span>
+        <Transition name="slide">
+          <button 
+            v-if="page" 
+            class="page p-3 m-1 is-clickable" 
+            type="button" 
+            :aria-label="`Page ${page}`"
+            :class="{ 'page-active': isActive(page) }"
+            :style="`background-color: ${isActive(page) ? '' : 'transparent'};`" @click="updatePageHandler(page)"
+          >
+            {{ page }}
+          </button>
+        </Transition>
+        </span>
     </div>
 
     <div class="is-flex is-align-items-center ml-1">
@@ -154,5 +156,20 @@ function goToNext() {
     background-color: var(--link) !important;
     color: #fff;
   }
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.25s ease-out;
+}
+
+.slide-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
 }
 </style>

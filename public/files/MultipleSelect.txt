@@ -1,29 +1,33 @@
 <template>
-  <div class="columns mt-4">
-
+  <div class="columns p-1 has-background-white is-rounded">
     <div class="column is-half">
       <div class="field">
         <label class="label">{{ title }}</label>
-        <div class="field">
-          <div class="control has-icons-left">
-            <input v-model="state.toAddFilter" class="input" type="text" placeholder="Pesquisar...">
-            <span class="icon is-small is-left">
-              <icon icon="search"></icon>
-            </span>
-          </div>
-        </div>
+        <DebounceInput @update:modelValue="state.toAddFilter = $event" />
 
-        <div class="control">
+        <div class="control mt-2">
           <div class="select is-multiple w-100">
-            <select @change="$emit('selected', state.selectedList)" v-model="state.toAddItemsSelected" multiple :size="size" class="w-100">
-              <option v-for="i, idx in toAddItemsFiltered" :key="idx" 
+            <select 
+              @change="emit('selected', state.selectedList)" 
+              v-model="state.toAddItemsSelected"
+              multiple
+              :size="props.size" 
+              class="w-100"
+              :disabled="props.isDisabled"
+            >
+              <option 
+                v-for="i, idx in toAddItemsFiltered" 
+                :key="idx" 
                 @dblclick="includeOnDblClick(i)"
-                :value="i[idFieldName]">{{ i[fieldLabel] }}</option>
+                :value="i[idFieldName]"
+              >
+                {{ i[fieldLabel] }}
+              </option>
             </select>
           </div>
         </div>
-        
       </div>
+        
       <div class="is-flex">
         <button @click="includeSelected" class="button is-light mr-3 is-flex-grow-1">Adicionar</button>
         <button @click="includeAll" class="button is-light">Adicionar Tudo</button>
@@ -33,16 +37,9 @@
     <div class="column is-half">
       <div class="field">
         <label class="label">{{ selectedTitle }}</label>
-        <div class="field">
-          <div class="control has-icons-left">
-            <input v-model="state.selectedFilter" class="input" type="text" placeholder="Pesquisar...">
-            <span class="icon is-small is-left">
-              <icon icon="search"></icon>
-            </span>
-          </div>
-        </div>
+        <DebounceInput @update:modelValue="state.selectedFilter = $event" />
 
-        <div class="control">
+        <div class="control mt-2">
           <div class="select is-multiple w-100">
             <select v-model="state.selectedItemsSelected" multiple :size="size" class="w-100">
               <option v-for="i, idx in selectedItemsFiltered" :key="idx" 
@@ -51,32 +48,34 @@
             </select>
           </div>
         </div>
-
       </div>
+
       <div class="is-flex">
         <button @click="removeSelected" class="button is-light mr-3 is-flex-grow-1">Remover</button>
         <button @click="removeAll" class="button is-light">Remover Tudo</button>
       </div>
     </div>
-
   </div>
 </template>
 
 <script setup lang="ts">
 import { reactive, computed, watch } from 'vue';
+import { Generic } from '../../interfaces/Generic';
+import DebounceInput from './DebounceInput.vue';
 
-const emit = defineEmits(['selected'])
+const emit = defineEmits<{
+  "selected": [value: Generic<any>[]  ],
+}>()
 
 interface Props {
-  title: string;
-  selectedTitle: string;
-  data: any[];
-  selected: any[];
-  enableFilter: boolean;
-  filter: any[];
+  data: Generic<any>[];
+  selected: Generic<any>[];
   fieldLabel: string;
-  idFieldName: string;
-  size: number;
+  title?: string;  
+  selectedTitle?: string;
+  size?: number;
+  isDisabled?: boolean;
+  idFieldName?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -87,9 +86,9 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 interface State {
-  selectedList: any[];
-  toAddItemsSelected: any[];
-  selectedItemsSelected: any[];
+  selectedList: Generic<any>[];
+  toAddItemsSelected: Generic<any>[];
+  selectedItemsSelected: Generic<any>[];
   toAddFilter: string;
   selectedFilter: string;
 }
@@ -119,11 +118,9 @@ watch(
   }
 )
 
-const dataFilteredByProp = computed(() => props.data.filter((e: any) => props.filter.includes(e[props.idFieldName])))
 
 const toAddItemsFiltered = computed(() => {
-  const data = props.enableFilter ? dataFilteredByProp.value : props.data
-  return data.filter((e: any) => {
+  return props.data.filter((e: any) => {
     return e[props.fieldLabel]?.toUpperCase().includes(state.toAddFilter.toUpperCase())
   })
 })
@@ -192,5 +189,9 @@ option {
 
 select {
   height: 258px !important;
+}
+
+.is-rounded {
+  border-radius: 4px;
 }
 </style>

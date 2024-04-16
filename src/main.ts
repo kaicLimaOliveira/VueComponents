@@ -26,7 +26,8 @@ import {
     faSort,
     faWindowRestore,
     faPager,
-    faHandPointer,
+    faArrowPointer,
+    faObjectUngroup,
 } from "@fortawesome/free-solid-svg-icons"
  
 import {
@@ -51,7 +52,8 @@ library.add(
     faSort,
     faWindowRestore,
     faPager,
-    faHandPointer,
+    faArrowPointer,
+    faObjectUngroup,
     
     faWpforms,
 )

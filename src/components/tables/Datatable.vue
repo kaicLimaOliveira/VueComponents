@@ -38,9 +38,19 @@
       <table v-show="!state.isLoading" class="table is-fullwidth has-text-left"
         :class="[{ 'is-bordered': isBordered, 'is-hoverable': isHoverable, 'is-striped': isStriped }, `table-padding-${tablePadding}`]">
         <thead>
-          <tr>
+          <tr class="is-clipped">
             <th v-for="header, key in computedHeaders" :key="key">
-              {{ header }}
+              <div @click="orderedFields(key as string)" class="is-flex">
+                <span>{{ header }}</span>
+
+                <div class="ml-3 is-relative" v-if="fieldExceptions(key as string)">
+                  <Transition name="slide-up" >
+                    <Icon v-if="state.ordered === 'normal'" icon="sort" class="is-absolute" />
+                    <Icon v-else-if="state.ordered === 'up'" icon="sort-up" class="is-absolute" />
+                    <Icon v-else-if="state.ordered === 'down'" icon="sort-down" class="is-absolute" />
+                  </Transition>
+                </div>
+              </div>
             </th>
           </tr>
         </thead>
@@ -165,6 +175,7 @@ interface State {
   page: number;
   isLoading: boolean;
   itemsPerPage: number;
+  ordered: string;
 }
 
 
@@ -175,6 +186,7 @@ const state: State = reactive({
   page: 1,
   isLoading: false,
   itemsPerPage: 10,
+  ordered: 'normal'
 })
 
 
@@ -185,14 +197,13 @@ onMounted(() => {
 
 
 const list = computed(() => {
-
   let pagesList: any[][][] = []
-  let columnList = []
+  const columnList = []
 
   for (let i = 0; i < state.data.length; i++) {
 
     const el = state.data[i];
-    let rowList = []
+    const rowList = []
 
     if (el === undefined) {
       columnList.push(el)
@@ -214,7 +225,7 @@ const list = computed(() => {
     columnList.push(rowList)
   }
 
-  let pagesLength = Math.ceil(columnList.length / state.itemsPerPage)
+  const pagesLength = Math.ceil(columnList.length / state.itemsPerPage)
   for (let i = 0; i < pagesLength; i++) {
     pagesList.push(columnList.splice(0, state.itemsPerPage))
   }
@@ -298,11 +309,40 @@ watch(
   }
 )
 
+
+function orderedFields(field: string) {
+  switch (state.ordered) {
+    case 'normal':
+      state.ordered = 'up'
+      break;
+    case 'down':
+      state.ordered = 'up'
+      break;
+    case 'up':
+      state.ordered = 'down'
+  }
+
+  return state.data.sort((a, b) => {
+    const ordered = a[field].localeCompare(b[field])
+    return state.ordered === 'up' ? ordered : -ordered
+  })
+}
+
+
 function selectItem(id: number, emitOption: any) {
   const selectedItem = state.data.find((res) => res.id === id);
   if (selectedItem) {
     emit(emitOption, selectedItem)
   }
+}
+
+
+const fieldExceptions = (key: string) => {
+  const exceptions = ['options']  
+  if (exceptions.includes(key)) {
+    return false
+  }
+  return true
 }
 </script>
 
@@ -362,5 +402,20 @@ function selectItem(id: number, emitOption: any) {
   100% {
     left: 110%;
   }
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.4s ease-out;
+}
+
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
 }
 </style>

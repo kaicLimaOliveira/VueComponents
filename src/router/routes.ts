@@ -91,6 +91,15 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
+    path: "/multiple-select",
+    name: "MultipleSelect",
+    component: () => import("../views/MultipleSelects.vue"),
+    meta: {
+      enableNav: true,
+      translatedName: 'MultipleSelects'
+    },
+  },
+  {
     path: '/:catchAll(.*)*',
     name: 'NotFound',
     component: () => import("../views/NotFound.vue"),
