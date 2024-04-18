@@ -41,10 +41,15 @@
 
         <div class="control mt-2">
           <div class="select is-multiple w-100">
-            <select v-model="state.selectedItemsSelected" multiple :size="size" class="w-100">
-              <option v-for="i, idx in selectedItemsFiltered" :key="idx" 
+            <select v-model="state.selectedItemsSelected" multiple :size="props.size" class="w-100">
+              <option 
+                v-for="i, idx in selectedItemsFiltered" 
+                :key="idx" 
                 @dblclick="removeOnDblClick(i)"
-                :value="i[idFieldName]">{{ i[fieldLabel] }}</option>
+                :value="i[idFieldName]"
+              >
+                {{ i[fieldLabel] }}
+              </option>
             </select>
           </div>
         </div>
@@ -108,7 +113,7 @@ watch(
     props.data.push(...state.selectedList.splice(0))
 
     newSelectedList.forEach(e => {
-      const itemIdx: number = props.data.findIndex(((i: any) => i[props.idFieldName] == e))
+      const itemIdx: number = props.data.findIndex(((i) => i[props.idFieldName] == e))
       if (itemIdx == -1) return
 
       const [ item ] = props.data.splice(itemIdx, 1)
@@ -120,7 +125,7 @@ watch(
 
 
 const toAddItemsFiltered = computed(() => {
-  return props.data.filter((e: any) => {
+  return props.data.filter((e) => {
     return e[props.fieldLabel]?.toUpperCase().includes(state.toAddFilter.toUpperCase())
   })
 })
@@ -131,14 +136,14 @@ const selectedItemsFiltered = computed(() => {
   })
 })
 
-function includeOnDblClick(i: any) {
+function includeOnDblClick(i: Generic<any>) {
   const [ item ] = props.data.splice(props.data.indexOf(i), 1)
   state.selectedList.push(item)
 }
 
 function includeSelected() {
   state.toAddItemsSelected.forEach((e) => {
-    props.data.forEach((i: any, idx) => {
+    props.data.forEach((i, idx) => {
       if (i[props.idFieldName] == e) {
         const [ item ] = props.data.splice(idx, 1)
         state.selectedList.push(item)
@@ -148,7 +153,7 @@ function includeSelected() {
 }
 
 function includeAll() {
-  toAddItemsFiltered.value.forEach((e: any) => {
+  toAddItemsFiltered.value.forEach((e) => {
     const [ item ] = props.data.splice(props.data.indexOf(e), 1)
     state.selectedList.push(item)
   })
@@ -157,7 +162,7 @@ function includeAll() {
     emit('selected', state.selectedList)
 }
 
-function removeOnDblClick(i: any) {
+function removeOnDblClick(i: Generic<any>) {
   const [ item ] = state.selectedList.splice(state.selectedList.indexOf(i), 1)
   props.data.push(item)
 }
@@ -188,7 +193,7 @@ option {
 }
 
 select {
-  height: 258px !important;
+  max-height: 400px !important;
 }
 
 .is-rounded {

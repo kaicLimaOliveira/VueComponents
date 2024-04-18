@@ -10,35 +10,39 @@
         1. Props:
           <ul>
             <li>
-              <b>data(Generic<any>[])</b>: .
+              <b>data(Generic<any>[])</b>: Os dados principais que o multiple select irá manipular.
             </li>
             <li>
-              <b>selected(Generic<any>[])</b>: .
+              <b>selected(Generic<any>[])</b>: Caso haja dados já selecionados dos dados principais, ele 
+              os manipulará, removendo-os dos dados principais e adicionando-os ao lado dos selecionados.
             </li>
             <li>
-              <b>field-label(string)</b>: .
+              <b>field-label(string)</b>: Qual a chave do seu objeto que será mostrada e exibida ao usuário 
+              no multiple select. Por exemplo: 'firstName'.
             </li>
             <li>
-              title(string): .
+              title(string): O título dos dados principais.
             </li>
             <li>
-              selected-title(string): .
+              selected-title(string): O título dos dados selecionados.
             </li>
             <li>
-              size(number): .
+              size(number): É o número de itens que serão mostrados no multiple select sem a necessidade de 
+              fazer scroll. Obs: Limitado a 12 itens.
             </li>
             <li>
-              is-disabled(boolean): .
+              is-disabled(boolean): Se o multiple select está desabilitado.
             </li>
             <li>
-              id-field-name(string): .
+              id-field-name(string): Cada opção possui um valor que não é exibido para o usuário. Por padrão, 
+              o campo 'Id' é atribuído a esse valor.
             </li>
           </ul>
 
         2. Emits:
           <ul>
             <li>
-              selected(Generic<any>[]): .
+              selected(Generic<any>[]): Os dados selecionados.
             </li>
           </ul>
       " 
@@ -47,25 +51,25 @@
 
     <section class="mt-4">
       <h5>MultipleSelect</h5>
-      <div class="is-flex w-100">
-        <div>
+      <div class="columns">
+        <div class="column is-5">
           <MultipleSelect 
             :data="state.data" 
             :selected="state.selected" 
             title="Nomes"
             selected-title="Nomes selecionados"
             field-label="firstName"
-            @selected=""
+            @selected="state.selected = ($event as Faker[])"
           ></MultipleSelect>
         </div>
 
-        <aside class="w-50 is-flex-grow-1==">
+        <div class="column is-7 ml-2">
           <Code 
             filename="MultipleSelect.vue" 
             component-path="/files/MultipleSelect.txt"
             language="html"
           ></Code>
-        </aside>
+        </div>
       </div>
     </section>
   </div>
@@ -86,7 +90,7 @@ interface State {
 }
 
 const state: State = reactive({
-  data: Array.from({ length: 10 }, randomDataFaker),
+  data: Array.from({ length: 15 }, randomDataFaker),
   selected: [],
 })
 

@@ -195,6 +195,7 @@ const state: State = reactive({
     firstName: "",
     lastName: "",
     email: "",
+    numbers: []
   },
   crudModal: {
     open: false,

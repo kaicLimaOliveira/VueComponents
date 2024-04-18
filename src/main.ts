@@ -28,6 +28,10 @@ import {
     faPager,
     faArrowPointer,
     faObjectUngroup,
+    faSquare,
+    faEye,
+    faPlusSquare,
+    faSquareXmark,
 } from "@fortawesome/free-solid-svg-icons"
  
 import {
@@ -54,6 +58,10 @@ library.add(
     faPager,
     faArrowPointer,
     faObjectUngroup,
+    faSquare,
+    faEye,
+    faPlusSquare,
+    faSquareXmark,
     
     faWpforms,
 )
