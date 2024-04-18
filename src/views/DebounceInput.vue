@@ -2,9 +2,11 @@
   <div class="is-flex is-flex-direction-column">
     <Message 
       class="fs-13"
-      title="Loader" 
+      title="DebounceInput" 
       content="
-        Os componentes loaders são de fácil utilização. Abaixo você verá como implementar esse componente. <br><br>
+        Os componentes debounce input são de fácil implementação. Ao pesquisar, o debounce tem um atraso para retornar os dados. 
+        Incluímos um dos componentes de loader para fazer a ligação entre dois componentes. Abaixo você verá como implementar 
+        esse componente. <br><br>
         <b> ** Propriedades em negrito são obrigatórias **</b> <br><br>
 
         1. Props:
@@ -42,10 +44,6 @@
     <section class="mt-4">
       <div class="is-flex w-100 mt-2">
         <div class="w-25">
-          <div class="fs-13 pb-2">
-            Ao pesquisar, o debounce tem um atraso para retornar a lista. Incluímos um dos 
-            componentes de loader para fazer a ligação entre dois componentes.
-          </div>
           <DebounceInput
             :has-details-icon="true"
             :details-data="['Id', 'Primeiro nome', 'Último nome', 'E-mail']"

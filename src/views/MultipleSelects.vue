@@ -4,7 +4,8 @@
       class="fs-13"
       title="MultipleSelect" 
       content="
-        . <br><br>
+        O multiple select é uma lista suspensa que permite múltiplas seleções. Isso significa 
+        que várias opções podem ser selecionadas ao mesmo tempo. <br><br>
         <b> ** Propriedades em negrito são obrigatórias **</b> <br><br>
 
         1. Props:
@@ -52,7 +53,7 @@
     <section class="mt-4">
       <h5>MultipleSelect</h5>
       <div class="columns">
-        <div class="column is-5">
+        <div class="column is-6">
           <MultipleSelect 
             :data="state.data" 
             :selected="state.selected" 
@@ -63,7 +64,7 @@
           ></MultipleSelect>
         </div>
 
-        <div class="column is-7 ml-2">
+        <div class="column is-6 ml-2">
           <Code 
             filename="MultipleSelect.vue" 
             component-path="/files/MultipleSelect.txt"

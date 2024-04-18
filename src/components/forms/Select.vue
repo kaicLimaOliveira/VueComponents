@@ -52,7 +52,7 @@
                     class="is-clickable has-text-primary hover fs-18 ts-1 mx-1"
                     :class="color"
                   >
-                    <Icon :icon="icon" />
+                    <Icon :icon />
                   </span>
                 </div>
               </div>
@@ -106,7 +106,7 @@ const state: State = reactive({
   data: [],
   search: '',
   offset: { value: 0 },
-  isLoading: true,
+  isLoading: false,
   canQuery: false,
   crudOptions: [
     {

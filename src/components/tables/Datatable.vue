@@ -411,11 +411,11 @@ const fieldExceptions = (key: string) => {
 
 .slide-up-enter-from {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(20px);
 }
 
 .slide-up-leave-to {
   opacity: 0;
-  transform: translateY(-30px);
+  transform: translateY(-20px);
 }
 </style>

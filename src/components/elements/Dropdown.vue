@@ -1,28 +1,28 @@
 <template>
-  <menu
+  <div
     @click="state.show = !state.show"
     :class="{ 'closed': isClosed, 'hovered-link': state.wrapperHovered }"
     @mouseover="state.wrapperHovered = true"
     @mouseleave="state.wrapperHovered = false"
-    class="dropdown has-text-weight-semibold is-clickable w-100 is-flex is-justify-content-space-between"
+    class="dropdown has-text-weight-semibold is-clickable w-100 is-flex is-justify-content-space-between is-align-items-center"
     :title="label"
   >
     <div class="is-flex">
-      <Icon :icon="icon" class="icon" />
-      <span class="fs-12 is-align-self-center ml-3">{{ label }}</span>
+      <Icon :icon="props.icon" class="icon" />
+      <span class="fs-12 is-align-self-center ml-3">{{ props.label }}</span>
     </div>
     <Icon
       v-show="!isClosed"
       icon="chevron-right"
-      class="icon arrow"
+      size="xs"
       :class="{ 'rotate-arrow': state.show }"
     ></Icon>
-  </menu>
+  </div>
  
   <div class="links-container navbar-item-container" :class="{ 'links-container-bg': state.show }">
     <TransitionGroup name="fade-list">
       <div
-        v-for="link, key in state.linksList"
+        v-for="{ icon, label, params, routeName }, key in state.linksList"
         :key="key"
         :style="{ 'transition-delay': key / 20 + 's' }"
       >
@@ -31,11 +31,11 @@
           @mouseover="state.currentLinkHovered = key + 1"
           @mouseleave="state.currentLinkHovered = null"
           class="router-link is-flex has-text-weight-semibold w-100 h-100"
-          :to="{ name: link.routeName, params: link.params }"
-          :title="link.label"
+          :to="{ name: routeName, params }"
+          :title="label"
         >
-          <Icon :icon="link.icon" class="icon" />
-          <span class="fs-12 is-align-self-center ml-3">{{ link.label }}</span>
+          <Icon :icon class="icon" />
+          <span class="fs-12 is-align-self-center ml-3">{{ label }}</span>
         </RouterLink>
       </div>
     </TransitionGroup>
@@ -54,7 +54,7 @@ const emit = defineEmits<{
 interface Props {
   links: Link[];
   label: string;
-  icon: string | string[];
+  icon?: string | string[];
   isClosed: boolean;
   searchInputDetailsLabel?: string;
   searchInputDetailsPosition?: string;
@@ -137,7 +137,6 @@ watch(
     padding-left: 2px;
   }
  
- 
   .icon {
     height: 1.2rem;
   }
@@ -190,11 +189,6 @@ watch(
   span {
     color: #fff !important;
   }
-}
- 
-.arrow {
-  width: 9px !important;
-  margin: 0 !important;
 }
  
 .rotate-arrow {

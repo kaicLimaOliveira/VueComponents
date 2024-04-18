@@ -64,7 +64,7 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: "/form-kit",
+    path: "/forms/form-kit",
     name: "FormKit",
     component: () => import("../views/FormsKit.vue"),
     meta: {
@@ -73,7 +73,7 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: "/debounce-input",
+    path: "/forms/debounce-input",
     name: "DebounceInput",
     component: () => import("../views/DebounceInput.vue"),
     meta: {
@@ -82,7 +82,7 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: "/select",
+    path: "/forms/select",
     name: "Select",
     component: () => import("../views/Selects.vue"),
     meta: {
@@ -91,12 +91,21 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: "/multiple-select",
+    path: "/forms/multiple-select",
     name: "MultipleSelect",
     component: () => import("../views/MultipleSelects.vue"),
     meta: {
       enableNav: true,
       translatedName: 'MultipleSelects'
+    },
+  },
+  {
+    path: "/elementos/dropdown",
+    name: "Dropdown",
+    component: () => import("../views/Dropdown.vue"),
+    meta: {
+      enableNav: true,
+      translatedName: 'Dropdown'
     },
   },
   {

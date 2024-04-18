@@ -1,0 +1,35 @@
+<template>
+  <Icon
+    @click="darkModeStore.toggleDarkMode()" 
+    :size
+    :rotation
+    :flip
+    :icon="darkModeStore.isDarkModeOn ? 'sun' : 'moon'" 
+  ></Icon>
+</template>
+
+<script setup lang="ts">
+import { useDarkModeStore } from '../../stores/darkStore'
+
+const darkModeStore = useDarkModeStore()
+
+interface Props {
+  size?: string;
+  rotation?: string;
+  flip?: string;
+}
+
+withDefaults(defineProps<Props>(), {
+  size: '2x',
+})
+</script>
+
+<style scoped lang="scss">
+svg {
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+}
+</style>

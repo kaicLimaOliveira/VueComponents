@@ -1,8 +1,8 @@
 <template>
-  <div class="ts-3">
+  <div class="ts-3" :class="{ 'dark-theme': isDarkModeOn }">
     <RouterView v-slot="{ Component }">
 
-      <Navbar v-if="$route.meta.enableNav">
+      <Navbar v-if="$route.meta.enableNav" :router-links="state.routerLinks">
         <Transition name="fade" mode="out-in">
           <Component 
             class="p-5 pb-6" 
@@ -25,14 +25,26 @@
 import Navbar from "./components/Navbar.vue"
 import Loader from "./components/loaders/Loader.vue"
 
+import { useDarkModeStore } from "./stores/darkStore";
 import { useLoadingStore } from "./stores/loadingStore"
+import { routerLinks } from "./utils/routerLinks";
+import { reactive, computed } from "vue";
+
+
 const loadingStore = useLoadingStore();
+const darkModeStore = useDarkModeStore()
+
+const isDarkModeOn = computed(() => darkModeStore.isDarkModeOn)
+const state = reactive({
+  routerLinks: routerLinks
+})
 </script>
 
 
 <style lang="scss">
 @import './assets/scss/globals.scss';
 @import './assets/scss/helpers.scss';
+@import './assets/scss/dark-theme.scss';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 #app {

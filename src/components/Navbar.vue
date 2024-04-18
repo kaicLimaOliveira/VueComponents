@@ -2,14 +2,15 @@
   <div class="is-flex">
     <aside class="sidebar is-flex is-flex-direction-column" :class="sideBarState">
       <div class="mt-5 mb-2 is-clickable is-flex is-justify-content-center" @click="$router.push({ name: 'Home' })">
-        <img src="../assets/vue.svg" width="50" alt="logo">
+        <div :class="{'logo-loader': state.isLoadingImage }"></div>
+        <img :src="props.imgSrc" width="50" alt="logo">
       </div>
  
       <hr class="my-3">
  
       <div class="is-flex is-flex-direction-column scrollable-content">
         <div class="mb-4">
-          <div class="is-flex is-align-items-center w-100 is-relative" v-for="route in state.routerLinks">
+          <div class="is-flex is-align-items-center w-100 is-relative" v-for="route in props.routerLinks">
             <div class="w-100">
               <RouterLink
                 v-if="route.type == 'link'"
@@ -61,79 +62,23 @@ import { Link, Dropdown as IDropdown } from "../interfaces/Menu"
 const sideBarState = ref(localStorage.getItem('sideBar') || 'opened')
  
 type Menu = (Link | IDropdown)[];
+interface Props {
+  routerLinks: Menu;
+  imgSrc?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  imgSrc: window.location.origin + '/vue.svg'
+})
+
 interface State {
   isLoadingImage: boolean;
   currentLinkHovered: number | null;
-  routerLinks: Menu;
 }
  
 const state: State = reactive({
   isLoadingImage: false,
   currentLinkHovered: null,
-  routerLinks: [
-    {
-      type: 'link',
-      routeName: 'Paginations',
-      label: 'Paginação',
-      icon: 'pager',
-    },
-    {
-      type: 'link',
-      routeName: 'Datatables',
-      label: 'Datatables',
-      icon: 'table-list',
-    },
-    {
-      type: 'link',
-      routeName: 'Alerts',
-      label: 'Alertas',
-      icon: 'circle-exclamation',
-    },
-    {
-      type: 'link',
-      routeName: 'Loader',
-      label: 'Loaders',
-      icon: 'spinner',
-    },
-    {
-      type: 'link',
-      routeName: 'Modals',
-      label: 'Modals',
-      icon: 'window-restore',
-    },
-    {
-      type: 'dropdown',
-      routeName: '',
-      label: 'Forms',
-      icon: 'file-signature',
-      links: [
-        {
-          type: 'link',
-          routeName: 'FormKit',
-          label: 'FormKit',
-          icon: ['fab', 'wpforms'],
-        },
-        {
-          type: 'link',
-          routeName: 'DebounceInput',
-          label: 'Debounce',
-          icon: 'magnifying-glass',
-        },
-        {
-          type: 'link',
-          routeName: 'Select',
-          label: 'Select',
-          icon: 'arrow-pointer',
-        },
-        {
-          type: 'link',
-          routeName: 'MultipleSelect',
-          label: 'MultipleSelect',
-          icon: 'object-ungroup',
-        },
-      ],
-    },
-  ]
 })
  
  

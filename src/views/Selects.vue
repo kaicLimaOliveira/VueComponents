@@ -4,22 +4,25 @@
       class="fs-13"
       title="Select" 
       content="
-        Os componentes loaders são de fácil utilização. Abaixo você verá como implementar esse componente. <br><br>
+        O componente select tem como objetivo aprimorar o select padrão do HTML. Neste select, é possível pesquisar os 
+        dados e também visualizar, atualizar e excluir itens dos dados. Abaixo, você verá como implementar esse componente.
+        <br><br>
         <b> ** Propriedades em negrito são obrigatórias **</b> <br><br>
 
         1. Props:
           <ul>
             <li>
-              <b>title(string)</b>: .
+              <b>title(string)</b>: O título da label do select.
             </li>
             <li>
-              <b>data(Generic<any>[])</b>: .
+              <b>data(Generic<any>[])</b>: Os dados principais que o select irá manipular.
             </li>
             <li>
               <b>current-selected-item(Generic<any>[])</b>: .
             </li>
             <li>
-              <b>field-label(string)</b>: .
+              <b>field-label(string)</b>:  Qual a chave do seu objeto que será mostrada e exibida ao usuário 
+              no select. Por exemplo: 'firstName'.
             </li>
             <li>
               id-field-label(string): .
@@ -28,23 +31,20 @@
               limit(number): .
             </li>
             <li>
-              is-opened(boolean): .
+              is-disabled(boolean): Se o select está desabilitado.
             </li>
             <li>
-              is-disabled(boolean): .
-            </li>
-            <li>
-              enable-delete(boolean): .
+              enable-delete(boolean): Se a opção de delete do select está desabilitado.
             </li>
           </ul>
 
         2. Emits:
           <ul>
             <li>
-              selected(Generic<any> | null): .
+              selected(Generic<any> | null): O objeto selecionado.
             </li>
             <li>
-              view-mode({ mode: string, item: Generic<any> }): .
+              view-mode({ mode: string, item: Generic<any> }): Qual o modo de visualização.
             </li>
           </ul>
       " 

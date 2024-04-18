@@ -1,0 +1,88 @@
+.dark-theme {
+  background-color: #272727  !important;
+  color: #d5d5d5 !important;
+
+  .nav-content {
+    background-color: #272727  !important;
+    border-bottom: 1px solid #393939 !important;
+  }
+
+  .page-loader {
+    background-color: #242427 !important;
+  }
+
+  .sidebar {
+    background-color: #272727  !important;
+    border-right: 1px solid #393939 !important;
+
+    .router-link {
+      color: #d5d5d5 !important;
+    }
+  }
+
+  .dropdown,
+  .box,
+  .page,
+  .control-items-active,
+  .dropdown-content,
+  .notifications,
+  .card,
+  .modal-card-head,
+  .modal-card-body,
+  .modal-card-foot,
+  .notification-box,
+  .select-panel-container,
+  .footer-cover,
+  .popover,
+  table,
+  td,
+  th,
+  .input,
+  select,
+  textarea {
+    background-color: #242427 !important;
+    color: #d5d5d5 !important;
+  }
+  
+  .unseen-marker {
+    background-color: #403c30 !important;
+  }
+
+  .input:disabled,
+  .textarea:disabled,
+  select:disabled,
+  .is-disabled,
+  .select:disabled {
+    filter: brightness(50%);
+  }
+
+  .title, label, a {
+    color: #d5d5d5 !important;
+  }
+
+  table,
+  td,
+  th,
+  input,
+  select {
+    background-color: #242427 !important;
+    color: #d5d5d5 !important;
+  }
+
+  .navbar-item,
+  .notifications-item {
+    &:hover {
+      background-color: #242427 !important;
+      filter: brightness(1.08);
+    }
+  }
+
+  .box {
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgb(186 186 186 / 15%);
+  }
+
+
+  ::placeholder {
+    color: #d5d5d5 !important;
+  }
+}

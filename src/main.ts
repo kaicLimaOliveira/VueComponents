@@ -36,6 +36,8 @@ import {
  
 import {
     faWpforms,
+    faDropbox,
+    faElementor,
 } from "@fortawesome/free-brands-svg-icons"
  
 library.add(
@@ -63,6 +65,8 @@ library.add(
     faPlusSquare,
     faSquareXmark,
     
+    faElementor,
+    faDropbox,
     faWpforms,
 )
 
