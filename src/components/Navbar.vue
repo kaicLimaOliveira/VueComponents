@@ -10,24 +10,24 @@
  
       <div class="is-flex is-flex-direction-column scrollable-content">
         <div class="mb-4">
-          <div class="is-flex is-align-items-center w-100 is-relative" v-for="route in props.routerLinks">
+          <div class="is-flex is-align-items-center w-100 is-relative" v-for="{ params, label, icon, ...route } in props.routerLinks">
             <div class="w-100">
               <RouterLink
                 v-if="route.type == 'link'"
                 class="router-link is-flex has-text-weight-semibold w-100 h-100"
-                :to="{ name: route.routeName }"
-                :title="route.label"
+                :to="{ name: route.routeName, params }"
+                :title="label"
               >
-                <Icon :icon="route.icon" class="icon" />
+                <Icon :icon class="icon" />
                 <span class="fs-12 is-align-self-center ml-3">
-                  {{ route.label }}
+                  {{ label }}
                 </span>
               </RouterLink>
  
               <Dropdown
                 v-else-if="route.type == 'dropdown'"
-                :icon="route.icon"
-                :label="route.label"
+                :icon
+                :label
                 :is-closed="sideBarState == 'closed'"
                 :links="route.links"
                 @current-link-hovered="(event) => state.currentLinkHovered = event"
@@ -56,12 +56,11 @@
 import Dropdown from "./elements/Dropdown.vue";
  
 import { reactive, ref } from "vue";
-import { Link, Dropdown as IDropdown } from "../interfaces/Menu"
+import { Menu } from "../interfaces/Menu"
  
  
 const sideBarState = ref(localStorage.getItem('sideBar') || 'opened')
  
-type Menu = (Link | IDropdown)[];
 interface Props {
   routerLinks: Menu;
   imgSrc?: string;

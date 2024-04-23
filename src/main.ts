@@ -32,6 +32,10 @@ import {
     faEye,
     faPlusSquare,
     faSquareXmark,
+    faForward,
+    faForwardStep,
+    faBackward,
+    faBackwardStep,
 } from "@fortawesome/free-solid-svg-icons"
  
 import {
@@ -64,6 +68,10 @@ library.add(
     faEye,
     faPlusSquare,
     faSquareXmark,
+    faForward,
+    faForwardStep,
+    faBackward,
+    faBackwardStep,
     
     faElementor,
     faDropbox,

@@ -4,6 +4,7 @@ declare module 'vue-router' {
   interface RouteMeta {
     enableNav: boolean;
     translatedName: string;
+    icon?: string | string[];
   }
 }
 
@@ -24,8 +25,9 @@ const routes: RouteRecordRaw[] = [
     component: () => import("../views/Paginations.vue"),
     meta: {
       enableNav: true,
-      translatedName: 'Paginações'
-    },
+      translatedName: 'Paginations',
+      icon: 'pager',
+  },
   },
   {
     path: "/tabelas",
@@ -33,7 +35,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import("../views/Datatables.vue"),
     meta: {
       enableNav: true,
-      translatedName: 'Tabelas'
+      translatedName: 'Datatables',
+      icon: 'table-list',
     },
   },
   {
@@ -42,7 +45,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import("../views/Alerts.vue"),
     meta: {
       enableNav: true,
-      translatedName: 'Alertas'
+      translatedName: 'Alerts',
+      icon: 'circle-exclamation',
     },
   },
   {
@@ -51,7 +55,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import("../views/Loaders.vue"),
     meta: {
       enableNav: true,
-      translatedName: 'Loaders'
+      translatedName: 'Loaders',
+      icon: 'spinner',
     },
   },
   {
@@ -60,53 +65,86 @@ const routes: RouteRecordRaw[] = [
     component: () => import("../views/Modals.vue"),
     meta: {
       enableNav: true,
-      translatedName: 'Modais'
+      translatedName: 'Modals',
+      icon: 'window-restore',
     },
   },
   {
-    path: "/forms/form-kit",
-    name: "FormKit",
-    component: () => import("../views/FormsKit.vue"),
+    path: "/forms",
+    name: "Forms",
+    children: [
+      {
+        path: "form-kit",
+        name: "FormKit",
+        component: () => import("../views/FormsKit.vue"),
+        meta: {
+          enableNav: true,
+          translatedName: 'FormKit',
+          icon: ['fab', 'wpforms'],
+        },
+      },
+      {
+        path: "debounce-input",
+        name: "DebounceInput",
+        component: () => import("../views/DebounceInput.vue"),
+        meta: {
+          enableNav: true,
+          translatedName: 'DebounceInput',
+          icon: 'magnifying-glass',
+        },
+      },
+      {
+        path: "select",
+        name: "Select",
+        component: () => import("../views/Selects.vue"),
+        meta: {
+          enableNav: true,
+          translatedName: 'Selects',
+          icon: 'arrow-pointer',
+        },
+      },
+      {
+        path: "multiple-select",
+        name: "MultipleSelect",
+        component: () => import("../views/MultipleSelects.vue"),
+        meta: {
+          enableNav: true,
+          translatedName: 'MultipleSelects',
+          icon: 'object-ungroup',
+        },
+      },
+    ],
     meta: {
       enableNav: true,
-      translatedName: 'FormKit'
+      translatedName: "Forms",
+      icon: "file-signature"
     },
   },
   {
-    path: "/forms/debounce-input",
-    name: "DebounceInput",
-    component: () => import("../views/DebounceInput.vue"),
+    path: "/elementos",
+    name: "Elements",
+    children: [
+      {
+        path: "dropdown",
+        name: "Dropdown",
+        component: () => import("../views/Dropdown.vue"),
+        meta: {
+          enableNav: true,
+          translatedName: 'Dropdown',
+          icon: ['fab', 'dropbox'],
+        },
+      },  
+    ],
     meta: {
       enableNav: true,
-      translatedName: 'DebounceInput'
+      translatedName: "Forms",
+      icon: ['fab', 'elementor']
     },
   },
   {
-    path: "/forms/select",
-    name: "Select",
-    component: () => import("../views/Selects.vue"),
-    meta: {
-      enableNav: true,
-      translatedName: 'Selects'
-    },
-  },
-  {
-    path: "/forms/multiple-select",
-    name: "MultipleSelect",
-    component: () => import("../views/MultipleSelects.vue"),
-    meta: {
-      enableNav: true,
-      translatedName: 'MultipleSelects'
-    },
-  },
-  {
-    path: "/elementos/dropdown",
-    name: "Dropdown",
-    component: () => import("../views/Dropdown.vue"),
-    meta: {
-      enableNav: true,
-      translatedName: 'Dropdown'
-    },
+    path: '/',
+    name: 'Fake',
+    redirect: "#"
   },
   {
     path: '/:catchAll(.*)*',

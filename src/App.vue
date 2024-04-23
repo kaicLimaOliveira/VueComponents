@@ -27,7 +27,7 @@ import Loader from "./components/loaders/Loader.vue"
 
 import { useDarkModeStore } from "./stores/darkStore";
 import { useLoadingStore } from "./stores/loadingStore"
-import { routerLinks } from "./utils/routerLinks";
+import { getNavbarRoutes } from "./utils/routerLinks";
 import { reactive, computed } from "vue";
 
 
@@ -36,7 +36,7 @@ const darkModeStore = useDarkModeStore()
 
 const isDarkModeOn = computed(() => darkModeStore.isDarkModeOn)
 const state = reactive({
-  routerLinks: routerLinks
+  routerLinks: getNavbarRoutes()
 })
 </script>
 

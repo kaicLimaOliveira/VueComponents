@@ -42,13 +42,30 @@
       <h5>Pagination</h5>
       <div class="is-flex w-100">
         <section class="is-flex-grow-1">
-          <Pagination v-model="state.page" :pages="state.tablePages" :showButtonsOnBounderies="true" />
+          <Pagination v-model="state.pagination.page" :pages="state.pagination.tablePages" :showButtonsOnBounderies="true" />
         </section>
         
         <aside class="w-50">
           <Code 
             filename="Pagination.vue" 
             component-path="/files/Pagination.txt"
+            language="html"
+          ></Code>
+        </aside>
+      </div>
+    </section>
+
+    <section class="mt-4">
+      <h5>PaginationLastOption</h5>
+      <div class="is-flex w-100">
+        <section class="is-flex-grow-1">
+          <PaginationLastOption v-model="state.paginationLastOption.page" :pages="state.paginationLastOption.tablePages" :showButtonsOnBounderies="true" />
+        </section>
+        
+        <aside class="w-50">
+          <Code 
+            filename="PaginationLastOption.vue" 
+            component-path="/files/PaginationLastOption.txt"
             language="html"
           ></Code>
         </aside>
@@ -61,16 +78,28 @@
 import Code from '../components/Code.vue';
 import Message from '../components/Message.vue';
 import Pagination from '../components/tables/Pagination.vue';
+import PaginationLastOption from '../components/tables/PaginationLastOption.vue';
 import { reactive } from 'vue';
 
 
-interface State {
+type IPagination = {
   page: number;
   tablePages: number;
 }
 
+interface State {
+  pagination: IPagination,
+  paginationLastOption: IPagination
+}
+
 const state: State = reactive({
-  page: 1,
-  tablePages: 10,
+  pagination: {
+    page: 1,
+    tablePages: 10,
+  },
+  paginationLastOption: {
+    page: 1,
+    tablePages: 15,
+  }
 });
 </script>

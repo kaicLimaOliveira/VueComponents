@@ -1,80 +1,43 @@
-import { Link, Dropdown } from "../interfaces/Menu";
+import { Link, Dropdown, Menu } from "../interfaces/Menu";
+import { useRouter } from 'vue-router'
 
-export const routerLinks: (Link | Dropdown)[] = [
-  {
-    type: 'link',
-    routeName: 'Paginations',
-    label: 'Paginação',
-    icon: 'pager',
-  },
-  {
-    type: 'link',
-    routeName: 'Datatables',
-    label: 'Datatables',
-    icon: 'table-list',
-  },
-  {
-    type: 'link',
-    routeName: 'Alerts',
-    label: 'Alertas',
-    icon: 'circle-exclamation',
-  },
-  {
-    type: 'link',
-    routeName: 'Loader',
-    label: 'Loaders',
-    icon: 'spinner',
-  },
-  {
-    type: 'link',
-    routeName: 'Modals',
-    label: 'Modals',
-    icon: 'window-restore',
-  },
-  {
-    type: 'dropdown',
-    routeName: '',
-    label: 'Forms',
-    icon: 'file-signature',
-    links: [
-      {
-        type: 'link',
-        routeName: 'FormKit',
-        label: 'FormKit',
-        icon: ['fab', 'wpforms'],
-      },
-      {
-        type: 'link',
-        routeName: 'DebounceInput',
-        label: 'Debounce',
-        icon: 'magnifying-glass',
-      },
-      {
-        type: 'link',
-        routeName: 'Select',
-        label: 'Select',
-        icon: 'arrow-pointer',
-      },
-      {
-        type: 'link',
-        routeName: 'MultipleSelect',
-        label: 'MultipleSelect',
-        icon: 'object-ungroup',
-      },
-    ],
-  },
-  {
-    type: 'dropdown',
-    routeName: '',
-    label: 'Elementos',
-    icon: ['fab', 'elementor'],
-    links: [
-      {
-        type: 'link',
-        routeName: 'Dropdown',
-        label: 'Dropdown',
-        icon: ['fab', 'dropbox'],
+
+export function getNavbarRoutes() {
+  const router = useRouter();
+  const routes = router.options.routes;
+  
+  const excludedRoutes = ['NotFound', 'Home', 'Fake'];
+  
+  const navbarRoutes: Menu = routes
+    .filter(route => !excludedRoutes.includes(route.name as string))
+    .map(route => {
+      const routeName = route.name;
+
+      if (route.children) {
+        const links: Link[] = route.children.map(child => ({
+          type: 'link',
+          routeName: child.name as string,
+          label: child.name as string,
+          icon: child.meta?.icon,
+        }));
+        
+        return {
+          type: 'dropdown',
+          routeName: routeName,
+          label: routeName,
+          icon: route.meta?.icon,
+          links,
+        } as Dropdown;
+        
+      } else {
+        return {
+          type: 'link',
+          routeName: routeName,
+          label: routeName,
+          icon: route.meta?.icon,
+        } as Link;
       }
-    ]
-  }
-]
+    });
+
+  return navbarRoutes
+}

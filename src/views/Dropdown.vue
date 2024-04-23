@@ -23,7 +23,7 @@
           <Dropdown 
             :links="state.links"
             label="Dropdown"
-            icon="magnifying-glass"
+            :icon="['fab', 'dropbox']"
             is-closed
           ></Dropdown>
         </div>
@@ -54,30 +54,24 @@ interface State {
 }
 
 const state: State = reactive({
-  links:  [
+  links: [
     {
       type: 'link',
-      routeName: 'FormKit',
-      label: 'FormKit',
-      icon: ['fab', 'wpforms'],
+      routeName: 'Fake',
+      label: 'Monitoramento',
+      icon: 'eye',
     },
     {
       type: 'link',
-      routeName: 'DebounceInput',
-      label: 'Debounce',
-      icon: 'magnifying-glass',
+      routeName: 'Fake',
+      label: 'Opções',
+      icon: 'ellipsis-v',
     },
     {
       type: 'link',
-      routeName: 'Dropdown',
-      label: 'Select',
-      icon: 'arrow-pointer',
-    },
-    {
-      type: 'link',
-      routeName: 'MultipleSelect',
-      label: 'MultipleSelect',
-      icon: 'object-ungroup',
+      routeName: 'Fake',
+      label: 'Edição',
+      icon: 'edit',
     },
   ],
 })

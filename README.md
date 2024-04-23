@@ -16,7 +16,7 @@
 
 ## 💻 Projeto
 
-Esse projeto tem como objetivo mostrar alguns dos principais componentes que eu utilizo e que desenvolvi, além de demonstrar um pouco do meu conhecimento nas tecnologias. Os componentes e o projeto utilizaram tecnologias como Vue.js 3, TypeScript, Composition API, Pinia, Vue Router e Transition.
+Esse projeto tem como objetivo mostrar alguns dos principais componentes que eu utilizo e que desenvolvi, além de demonstrar o meu conhecimento nas tecnologias e no ecossistema de Vue.js. Os componentes e o projeto utilizaram tecnologias como Vue.js 3, TypeScript, Composition API, Pinia, Vue Router, Composables e Transition.
 
 
 

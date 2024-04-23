@@ -3,7 +3,7 @@ interface MenuBase {
   label: string;
   routeName: string;
   params?: any;
-  icon: string | string[];
+  icon?: string | string[];
 }
  
 interface Link extends MenuBase {
@@ -15,7 +15,10 @@ interface Dropdown extends MenuBase {
   links: Link[];
 }
  
+type Menu = (Link | Dropdown)[];
+
 export type {
   Link,
   Dropdown,
+  Menu,
 }
