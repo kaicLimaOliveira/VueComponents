@@ -1,44 +1,49 @@
 <template>
-  <div
-    @click="state.show = !state.show"
-    :class="{ 'closed': props.isClosed, 'hovered-link': state.wrapperHovered }"
-    @mouseover="state.wrapperHovered = true"
-    @mouseleave="state.wrapperHovered = false"
-    class="dropdown has-text-weight-semibold is-clickable w-100 is-flex is-justify-content-space-between is-align-items-center"
-    :title="props.label"
-  >
-    <div class="is-flex">
-      <Icon :icon="props.icon" class="icon" />
-      <span class="fs-12 is-align-self-center ml-3">{{ props.label }}</span>
-    </div>
-    <Icon
-      v-show="!props.isClosed"
-      icon="chevron-right"
-      size="xs"
-      :class="{ 'rotate-arrow': state.show }"
-    ></Icon>
-  </div>
- 
-  <div class="links-container navbar-item-container" :class="{ 'links-container-bg': state.show }">
-    <TransitionGroup name="fade-list">
-      <div
-        v-for="{ icon, label, params, routeName }, key in state.linksList"
-        :key="key"
-        :style="{ 'transition-delay': key / 20 + 's' }"
-      >
-        <RouterLink
-          :class="{ 'closed': props.isClosed, 'hovered-link': state.currentLinkHovered === key + 1}"
-          @mouseover="state.currentLinkHovered = key + 1"
-          @mouseleave="state.currentLinkHovered = null"
-          class="router-link is-flex has-text-weight-semibold w-100 h-100"
-          :to="{ name: routeName, params }"
-          :title="label"
-        >
-          <Icon :icon class="icon" />
-          <span class="fs-12 is-align-self-center ml-3">{{ label }}</span>
-        </RouterLink>
+  <div class="dropdown">
+    <div
+      @click="state.show = !state.show"
+      :class="{ 'closed': props.isClosed }"
+      @mouseover="state.wrapperHovered = true"
+      @mouseleave="state.wrapperHovered = false"
+      class="dropdown-container"
+      :title="props.label"
+    >
+      <div class="dropdown-container-label">
+        <Icon :icon="props.icon" class="dropdown-container-label-icon" size="sm" />
+        <span class="dropdown-container-label-content">
+          {{ props.label }}
+        </span>
       </div>
-    </TransitionGroup>
+  
+      <Icon
+        v-show="!props.isClosed"
+        icon="chevron-right"
+        size="xs"
+        :class="{ 'rotate-arrow': state.show }"
+      ></Icon>
+    </div>
+   
+    <div class="dropdown-links-container">
+      <TransitionGroup name="fade-list">
+        <div
+          v-for="{ icon, label, params, routeName }, key in state.linksList"
+          :key="key"
+          :style="{ 'transition-delay': key / 20 + 's' }"
+        >
+          <RouterLink
+            :class="{ 'closed': props.isClosed}"
+            @mouseover="state.currentLinkHovered = key + 1"
+            @mouseleave="state.currentLinkHovered = null"
+            class="router-link"
+            :to="{ name: routeName, params }"
+            :title="label"
+          >
+            <Icon :icon class="dropdown-links-icon" size="sm" />
+            <span class="dropdown-links-label">{{ label }}</span>
+          </RouterLink>
+        </div>
+      </TransitionGroup>
+    </div>
   </div>
 </template>
  
@@ -121,56 +126,100 @@ watch(
  
 <style scoped lang="scss">
 .dropdown {
-  margin: 0px 0px 5px;
-  border-radius: 8px;
-  transition: .12s;
-  font-family: 'Montserrat';
-  padding: 10px 12px;
-  background-color: #ebebeb;
-  color: var(--black-700);
- 
-  &:hover {
-    background-color: var(--grey-600);
-  }
- 
-  .is-flex .icon {
-    padding-left: 2px;
-  }
- 
-  .icon {
-    height: 1.2rem;
-  }
- 
-  &:hover .icon,
-  &:hover span {
-    color: #fff !important;
-  }
-}
- 
-.navbar-item-container {
-  position: relative;
   width: 100%;
-}
- 
-.router-link {
-  border-radius: 8px;
-  transition: .12s;
-  padding: 10px 12px;
-  margin: 0px 0px 5px;
-  background-color: #ebebeb;
-  color: var(--black-700);
- 
-  &:hover {
-    background-color: var(--grey-600);
+  display: flex;
+  flex-direction: column;
+
+  &-container {
+    margin: 0px 0px 5px;
+    border-radius: 4px;
+    transition: .12s;
+    padding: 10px;
+    background-color: #ebebeb;
+    font-family: 'Montserrat';
+    color: var(--black-700);
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+   
+    &:hover {
+      background-color: var(--grey-600);
+    }
+
+    &-label {
+      display: flex;
+
+      &-icon {
+        color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 5px;
+      }
+    
+      &-content {
+        font-size: 11px;
+        margin-left: 10px;
+      }
+    }
+  
+    .rotate-arrow {
+      transform: rotate(90deg);
+    }
+   
+    &:hover .dropdown-container-label-icon,
+    &:hover .dropdown-container-label-content {
+      color: #fff;
+    }
   }
- 
-  .icon {
-    height: 1.2rem;
-  }
- 
-  &:hover .icon,
-  &:hover span {
-    color: #fff !important;
+
+  &-links-container {
+    .router-link {
+      border-radius: 4px;
+      transition: .12s;
+      padding: 10px;
+      margin: 0px 0px 5px;
+      background-color: #ebebeb;
+      color: var(--black-700);
+      display: flex;
+      font-weight: 600;
+      width: 100%;
+      height: 100%;
+
+      &:hover {
+        background-color: var(--grey-600);
+
+        svg, span {
+          color: #fff !important;
+        }
+      }
+
+      &-active {
+        background-color: var(--grey-600);
+        color: #fff !important;
+      
+        svg,
+        span {
+          color: #fff !important;
+        }
+      }
+    
+      .dropdown-links-icon {
+        width: 1.5rem;
+        color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .dropdown-links-label {
+        font-size: 11px;
+        margin-left: 10px;
+      }
+    }
   }
 }
  
@@ -179,30 +228,6 @@ watch(
   span {
     display: none;
   }
-}
- 
-.router-link-active {
-  background-color: var(--grey-600);
-  color: #fff !important;
- 
-  .icon,
-  span {
-    color: #fff !important;
-  }
-}
- 
-.rotate-arrow {
-  transform: rotate(90deg);
-}
- 
-.links-container {
-  transition: .25s;
-  border-radius: 8px;
-  transform: translateX(12px)
-}
- 
-.links-container-bg {
-  transform: translateX(0)
 }
  
 .fade-list-enter-active,

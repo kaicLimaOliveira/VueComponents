@@ -1,24 +1,28 @@
 <template>
-  <div class="w-100">
+  <div class="alert">
     <TransitionGroup name="alert">
-      <div v-for="alert, key in alertStore.alerts" :key="key" class="alert w-100 is-flex is-clickable mb-3"
-        @click="alertStore.remove(alert)">
-        <div class="is-flex-grow-1" :class="alert.type">
-          <div class="columns p-2">
-            <div class="column is-2 mt-3">
-              <Icon :icon="alert.icon" class="fa-2x has-text-white"></Icon>
-            </div>
-
-            <div class="column mt-1">
-              <span class="has-text-weight-bold has-text-white is-block">{{ alert.title }}</span>
-              <span class="has-text-white fs-14 has-text-weight-medium" v-html="alert.content"></span>
-            </div>
-
-            <div class="column is-1 mr-2" @click="alertStore.remove(alert)">
-              <Icon icon="xmark" class="close-x has-text-white"></Icon>
-            </div>
+      <div 
+        v-for="alert, key in alertStore.alerts" :key="key" 
+        class="alert-container"
+        @click="alertStore.remove(alert)"
+        :class="alert.type"
+      >
+        <div class="alert-container-columns">
+          <div class="column-icon">
+            <Icon :icon="alert.icon" />
           </div>
-          <progress class="progress is-small is-gradient" max="100"></progress>
+
+          <div class="column-content">
+            <span class="column-content-title">{{ alert.title }}</span>
+            <span class="column-content-text" v-html="alert.content"></span>
+          </div>
+
+          <div class="column-remove" @click="alertStore.remove(alert)">
+            <Icon icon="xmark" class="icon-remove" />
+          </div>
+        </div>
+        <div class="progress-bar">
+          <progress class="progress-bar-value" max="100"></progress>
         </div>
       </div>
     </TransitionGroup>
@@ -27,7 +31,6 @@
 
 <script setup lang="ts">
 import { useAlertStore } from "../../stores/alertStore";
-
 const alertStore = useAlertStore()
 </script>
 
@@ -43,35 +46,99 @@ const alertStore = useAlertStore()
   transform: translateX(30px);
 }
 
-.alert-container {
-  top: 0;
-  z-index: 1001;
-  pointer-events: none;
-}
-
-.progress.is-gradient {
-  opacity: .75;
-  border-radius: 0px;
-}
-
-.progress:indeterminate {
-  background-image: linear-gradient(to right, rgb(255, 255, 255) 30%, rgb(241, 241, 241) 60%);
-}
-
 .alert {
-  min-height: 100px;
-  border-radius: 5px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.144);
-  max-width: 350px;
-  pointer-events: all;
+  width: 100%;
+  height: fit-content;
 
-  &-bar {
-    min-width: 12px;
+  &-container {
+    width: 100%;
+    max-width: 350px;
+    min-height: 100px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.144);
+    pointer-events: all;
+    cursor: pointer;
+    margin-bottom: 12px;
+
+    &-columns {
+      display: flex;
+      padding: 6px;
+      margin-top: 6px;
+
+      .column-icon {
+        flex: none;
+        width: 12%;
+        text-align: center;
+
+        svg {
+          color: #fff;
+        }
+      }
+
+      .column-content {
+        margin: 0 2px;
+        color: #fff;
+        width: 80%;
+
+        &-title {
+          font-size: 15px;
+          font-weight: bold;
+          display: block;
+        }
+
+        &-text {
+          font-size: 12px;
+          font-weight: 600;
+        }
+      }
+
+      .column-remove {
+        flex: none;
+        width: 8%;
+        text-align: center;
+
+        .icon-remove {
+          color: #fff;
+
+          &:hover {
+            filter: brightness(0.9);
+          }
+        }
+      }
+    }
+  
+    .progress-bar {
+      opacity: 0.75;
+      height: 0.75rem;
+      position: relative;
+      background: #fff;
+      
+      &-value {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        opacity: 0.2;
+        background-image: linear-gradient(to right, rgb(255, 255, 255) 30%, rgb(241, 241, 241) 60%);
+        animation: indeterminateAnimation 2s infinite linear;
+        transform-origin: 0% 50%;
+      }
+    }
   }
+}
 
-  .close-x:hover {
-    filter: brightness(0.9);
+@keyframes indeterminateAnimation {
+  0% {
+    transform:  translateX(0) scaleX(0);
+  }
+  40% {
+    transform:  translateX(0) scaleX(0.4);
+  }
+  100% {
+    transform:  translateX(100%) scaleX(0.5);
   }
 }
 </style>

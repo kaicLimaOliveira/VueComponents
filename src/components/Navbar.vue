@@ -3,7 +3,7 @@
     <aside class="sidebar is-flex is-flex-direction-column" :class="sideBarState">
       <div class="mt-5 mb-2 is-clickable is-flex is-justify-content-center" @click="$router.push({ name: 'Home' })">
         <div :class="{'logo-loader': state.isLoadingImage }"></div>
-        <img :src="props.imgSrc" width="50" alt="logo">
+        <img :src="props.imgSrc" width="35" alt="logo">
       </div>
  
       <hr class="my-3">
@@ -11,28 +11,26 @@
       <div class="is-flex is-flex-direction-column scrollable-content">
         <div class="mb-4">
           <div class="is-flex is-align-items-center w-100 is-relative" v-for="{ params, label, icon, ...route } in props.routerLinks">
-            <div class="w-100">
-              <RouterLink
-                v-if="route.type == 'link'"
-                class="router-link is-flex has-text-weight-semibold w-100 h-100"
-                :to="{ name: route.routeName, params }"
-                :title="label"
-              >
-                <Icon :icon class="icon" />
-                <span class="fs-12 is-align-self-center ml-3">
-                  {{ label }}
-                </span>
-              </RouterLink>
- 
-              <Dropdown
-                v-else-if="route.type == 'dropdown'"
-                :icon
-                :label
-                :is-closed="sideBarState == 'closed'"
-                :links="route.links"
-                @current-link-hovered="(event) => state.currentLinkHovered = event"
-              ></Dropdown>
-            </div>
+            <RouterLink
+              v-if="route.type == 'link'"
+              class="router-link is-flex has-text-weight-semibold w-100 h-100"
+              :to="{ name: route.routeName, params }"
+              :title="label"
+            >
+              <Icon :icon class="has-text-black is-flex is-justify-content-center is-align-items-center" size="sm" />
+              <span class="fs-11 is-align-self-center ml-3">
+                {{ label }}
+              </span>
+            </RouterLink>
+
+            <Dropdown
+              v-else-if="route.type == 'dropdown'"
+              :icon
+              :label
+              :is-closed="sideBarState == 'closed'"
+              :links="route.links"
+              @current-link-hovered="(event) => state.currentLinkHovered = event"
+            ></Dropdown>
           </div>
         </div>
       </div>
@@ -124,21 +122,21 @@ function toggleSideBar() {
  
     .router-link {
       margin: 0px 0px 5px;
-      border-radius: 8px;
+      border-radius: 4px;
       transition: .12s;
-      padding: 10px 12px;
+      padding: 10px;
       background-color: var(--grey-400);
  
-      .icon, span {
+      svg, span {
         color: var(--black-700);
-        height: 1.2rem;
+        margin: 0 5px;
       }
  
       &:hover {
         background-color: var(--grey-600);
       }
  
-      &:hover .icon,
+      &:hover svg,
       &:hover span {
         color: rgb(255, 255, 255) !important;
       }
@@ -153,11 +151,11 @@ function toggleSideBar() {
 }
  
 .opened {
-  width: 180px;
+  width: 170px;
 }
  
 .closed.sidebar {
-  width: 81px;
+  width: 75px;
  
   .router-link {
     span {

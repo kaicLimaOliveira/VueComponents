@@ -1,11 +1,11 @@
 <template>
-  <div class="w-100">
+  <div class="alert">
     <TransitionGroup name="alert">
-      <div v-for="alert, key in alertStore.alerts" :key="key" class="alert" @click="alertStore.remove(alert)">
-        <div :class="alert.type" class="alert-bar"></div>
-        <div class="alert-content">
-          <span class="has-text-weight-bold has-text-grey-dark is-block">{{ alert.title }}</span>
-          <span class="has-text-grey fs-14 has-text-weight-medium" v-html="alert.content"></span>
+      <div v-for="alert, key in alertStore.alerts" :key="key" class="alert-container" @click="alertStore.remove(alert)">
+        <div :class="alert.type" class="alert-container-bar"></div>
+        <div class="alert-container-content">
+          <span class="alert-container-content-title">{{ alert.title }}</span>
+          <span class="alert-container-content-text" v-html="alert.content"></span>
         </div>
       </div>
     </TransitionGroup>
@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 import { useAlertStore } from '../../stores/alertStore';
-
 const alertStore = useAlertStore()
 </script>
 
@@ -30,39 +29,57 @@ const alertStore = useAlertStore()
   transform: translateX(30px);
 }
 
-.alert-container {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  min-height: 100vh;
-  z-index: 1001;
-  padding: 30px;
-  pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .alert {
   width: 100%;
-  min-height: 100px;
-  border-radius: 5px;
-  overflow: hidden;
-  display: flex;
-  margin-bottom: 16px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.144);
-  max-width: 350px;
-  pointer-events: all;
-  cursor: pointer;
 
-  &-bar {
-    min-width: 12px;
-  }
+  &-container {
+    width: 100%;
+    min-height: 100px;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.144);
+    max-width: 350px;
+    pointer-events: all;
+    cursor: pointer;
+  
+    &-bar {
+      min-width: 12px;
+    }
+  
+    &-content {
+      flex-grow: 1;
+      background-color: white;
+      padding: 5px 8px;
 
-  &-content {
-    flex-grow: 1;
-    background-color: white;
-    padding: 5px 8px;
+      &-title {
+        display: block;
+        font-weight: 700
+      }
+
+      &-text {
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
   }
+}
+
+
+.info {
+  background-color: #209cee;
+}
+
+.danger {
+  background-color: #f14668;
+}
+
+.success {
+  background-color: #4ce691;
+}
+
+.warning {
+  background-color: #ffe08a;
 }
 </style>

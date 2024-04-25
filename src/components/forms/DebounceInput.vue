@@ -1,29 +1,28 @@
 <template>
-  <div class="control has-icons-left" :class="{ 'has-icons-right': hasDetailsIcon }">
+  <div class="debounce">
     <input 
-      class="input" 
-      :class="{ 'has-icons-right': props.hasDetailsIcon }" 
+      class="debounce-input" 
       type="text" 
       :placeholder="props.placeholder"
       @input="handleInput" 
     />
 
-    <span class="icon is-left">
-      <Icon icon="magnifying-glass" class="has-text-grey-light"></Icon>
+    <span class="icon-left">
+      <Icon icon="magnifying-glass" />
     </span>
 
-    <span v-if="props.hasDetailsIcon" class="icon is-right is-clickable details-icon">
-      <Icon icon="ellipsis-v" class="has-text-grey-light ts-15"></Icon>
+    <span v-if="props.hasDetailsIcon" class="icon-right details-icon">
+      <Icon icon="ellipsis-v" />
 
       <Transition name="fade">
         <div 
-          class="details-box has-text-left has-text-grey fs-13 p-5 has-background-white z-500"
+          class="details-box"
           :class="[props.detailsPosition === 'right' ? 'details-right' : 'details-bottom']"
         >
           <span>{{ props.detailsLabel }}</span>
           <span class="triangle"></span>
-          <ul class="mt-1">
-            <li v-for="detail, key in props.detailsData" :key="key" class="ml-5">
+          <ul>
+            <li v-for="detail, key in props.detailsData" :key="key">
               {{ detail }}
             </li>
           </ul>
@@ -68,46 +67,110 @@ const triggerDebounce = debounce((text: string) => emit('update:modelValue', tex
 </script>
     
 <style lang="scss" scoped>
-.details-icon {
+.debounce {
+  box-sizing: border-box;
+  clear: both;
+  position: relative;
 
-  &:hover svg {
-    color: grey !important;
+  &-input {
+    background-color: hsl(0, 0%, 100%);
+    color: #7d7d7d;
+    max-width: 100%;
+    width: 100%;
+    align-items: center;
+    border: 1px solid hsl(0, 0%, 86%);
+    border-radius: 4px;
+    box-shadow: none;
+    font-size: 1rem;
+    height: 2.5em;
+    display: inline-flex;
+    justify-content: flex-start;
+    line-height: 1.5;
+    position: relative;
+    vertical-align: top;
+    outline: none;
+    padding: 8px 25px 8px 40px;
   }
 
-  &:hover .details-box {
-    display: block;
-  }
-}
+  .icon-left {
+    position: absolute;
+    top:0; 
+    left:0;
+    border: none;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
 
-.details-box {
-  display: none;
-  position: absolute;
-  border-radius: 6px;
-  box-shadow: -1px 6px 18px rgb(0 0 0 / 14%);
-  width: 300px;
-
-  &.details-right {
-    left: 50px;
-  }
-
-  &.details-bottom {
-    top: 35px;
+    svg {
+      color: #b5b5b5;
+    }
   }
 
-  & li {
-    list-style-type: disc;
-  }
-}
+  .icon-right {
+    position: absolute;
+    top:0; 
+    right:0;
+    border: none;
+    cursor: pointer;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    padding-right: 12px;
 
-.triangle {
-  position: absolute;
-  width: 0; 
-  height: 0; 
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-right: 10px solid rgb(255, 255, 255);
-  left: -3%;
-  top: 38%;
+    svg {
+      color: #b5b5b5;
+      transition: .15s;
+    }
+  }
+
+  .details-icon {
+    &:hover svg {
+      color: grey !important;
+    }
+
+    &:hover .details-box {
+      display: block;
+    }
+
+    .details-box {
+      display: none;
+      position: absolute;
+      border-radius: 6px;
+      box-shadow: -1px 6px 18px rgb(0 0 0 / 14%);
+      width: 300px;
+      text-align: left;
+      padding: 1.5rem;
+      background-color: #fff;
+      color: #7a7a7a;
+      z-index: 500;
+      font-size: 12px;
+      
+      &.details-right {
+        left: 40px;
+      }
+
+      &.details-bottom {
+        top: 35px;
+      }
+
+      ul {
+        margin-top: 4px;
+      }
+      
+      .triangle {
+        position: absolute;
+        width: 0; 
+        height: 0; 
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 10px solid rgb(255, 255, 255);
+        left: -3%;
+        top: 38%;
+      }
+    }
+  }
+
 }
 </style>
     

@@ -1,5 +1,5 @@
 <template>
-  <div class="page-loader is-flex is-justify-content-center is-align-items-center">
+  <div class="page-loader">
     <div class="anim-11">
       <div></div>
       <div></div>
@@ -19,6 +19,9 @@
   height: 100%;
   background: white;
   z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .anim-11 {

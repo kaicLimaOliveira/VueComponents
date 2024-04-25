@@ -85,7 +85,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "debounce-input",
-        name: "DebounceInput",
+        name: "Debounce",
         component: () => import("../views/DebounceInput.vue"),
         meta: {
           enableNav: true,
@@ -105,7 +105,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "multiple-select",
-        name: "MultipleSelect",
+        name: "MultiSelect",
         component: () => import("../views/MultipleSelects.vue"),
         meta: {
           enableNav: true,

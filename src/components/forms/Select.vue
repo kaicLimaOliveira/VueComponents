@@ -20,51 +20,53 @@
         Nenhum item selecionado.
       </p>
 
-      <div class="select-panel" :class="{ 'is-hidden': !isDisabled && !state.isOpened }">
-        <div class="select-panel-container mt-2">
-          <DebounceInput @update:model-value="state.search = $event" class="m-2" />
-          <hr class="my-0 has-background-grey-lighter">
-
-          <div 
-            class="select-panel-options"
-            @scroll="loadOnScroll"
-            ref="selectPanelOptions"
-          >
+      <Transition name="fade">
+        <div class="select-panel" v-if="!isDisabled && state.isOpened">
+          <div class="select-panel-container mt-2">
+            <DebounceInput @update:model-value="state.search = $event" class="m-2" />
+            <hr class="my-0 has-background-grey-lighter">
+  
             <div 
-              v-for="item, key in state.data" :key="key"
-              class="select-panel-options-item is-clickable"
-              :class="{'is-selected': item[idFieldLabel] == state.selectedItem}"
-              @click="[
-                state.selectedItem = item, 
-                emit('selected', state.selectedItem), 
-                !props.isDisabled ? state.isOpened = !state.isOpened : null
-              ]"
+              class="select-panel-options"
+              @scroll="loadOnScroll"
+              ref="selectPanelOptions"
             >
-              <div class="is-flex is-justify-content-space-between is-align-items-center">
-                <span class="break-word">
-                  {{ item[fieldLabel] }}
-                </span>
-
-                <div class="is-flex is-align-items-center">
-                  <span 
-                    v-for="{ icon, mode, color } in state.crudOptions"
-                    @click.stop="emit('view-mode', { mode, item })"
-                    class="is-clickable has-text-primary hover fs-18 ts-1 mx-1"
-                    :class="color"
-                  >
-                    <Icon :icon />
+              <div 
+                v-for="item, key in state.data" :key="key"
+                class="select-panel-options-item is-clickable"
+                :class="{'is-selected': item[idFieldLabel] == state.selectedItem}"
+                @click="[
+                  state.selectedItem = item, 
+                  emit('selected', state.selectedItem), 
+                  !props.isDisabled ? state.isOpened = !state.isOpened : null
+                ]"
+              >
+                <div class="is-flex is-justify-content-space-between is-align-items-center">
+                  <span class="break-word">
+                    {{ item[fieldLabel] }}
                   </span>
+  
+                  <div class="is-flex is-align-items-center">
+                    <span 
+                      v-for="{ icon, mode, color } in state.crudOptions"
+                      @click.stop="emit('view-mode', { mode, item })"
+                      class="is-clickable has-text-primary hover fs-18 ts-1 mx-1"
+                      :class="color"
+                    >
+                      <Icon :icon />
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-      
-            <WheelLoader :is-loading="state.isLoading" />
-            <div v-if="state.data.length === 0 && !state.isLoading" class="m-4 fs-15 has-text-grey-light has-text-centered">
-              Nenhum dado encontrado...
+        
+              <WheelLoader :is-loading="state.isLoading" />
+              <div v-if="state.data.length === 0 && !state.isLoading" class="m-4 fs-15 has-text-grey-light has-text-centered">
+                Nenhum dado encontrado...
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Transition>
     </div>
   </div>
 </template>
@@ -275,5 +277,12 @@ hr {
 
 .hover:hover {
   filter: brightness(0.8);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
