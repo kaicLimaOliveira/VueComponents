@@ -24,7 +24,6 @@
             :links="state.links"
             label="Dropdown"
             :icon="['fab', 'dropbox']"
-            is-closed
           ></Dropdown>
         </div>
 

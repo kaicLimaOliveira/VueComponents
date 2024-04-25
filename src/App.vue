@@ -1,11 +1,11 @@
 <template>
-  <div class="ts-3" :class="{ 'dark-theme': isDarkModeOn }">
+  <div :class="{ 'dark-theme': isDarkModeOn }">
     <RouterView v-slot="{ Component }">
 
       <Navbar v-if="$route.meta.enableNav" :router-links="state.routerLinks">
         <Transition name="fade" mode="out-in">
           <Component 
-            class="p-5 pb-6" 
+            class="component" 
             :is="Component" 
             :key="$route.path"
           ></Component>
@@ -13,7 +13,7 @@
       </Navbar>
 
       <Transition v-else name="fade" mode="out-in">
-        <Component :is="Component" class="vh-100" :key="$route.path"></Component>
+        <Component :is="Component" class="component-without-navbar" :key="$route.path"></Component>
       </Transition>
 
       <Loader v-if="loadingStore.isLoading"></Loader>
@@ -40,18 +40,11 @@ const state = reactive({
 })
 </script>
 
-
 <style lang="scss">
 @import './assets/scss/globals.scss';
 @import './assets/scss/helpers.scss';
-@import './assets/scss/dark-theme.scss';
+// @import './assets/scss/dark-theme.scss';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
-
-#app {
-  font-family: 'Montserrat', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
 * {
   margin: 0;
@@ -63,22 +56,26 @@ html,
 body {
   background: #f9fbfd;
   overflow: hidden !important;
-}
 
-.content-container {
-  height: 100%;
-  overflow-y: scroll;
-  position: relative;
+  #app {
+    font-family: 'Montserrat', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-  &::-webkit-scrollbar {
-    display: none;
+    div {
+      transition: 0.3s;
+
+      .component {
+        padding: 20px 20px 35px 20px;
+      }
+
+      .component-without-navbar {
+        height: 100vh;
+      }
+    }
   }
 }
 
-.modal-view {
-  width: 100%;
-  height: 400px;
-}
 
 .fade-enter-active,
 .fade-leave-active {
@@ -88,15 +85,5 @@ body {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-}
-
-.dp__range_end,
-.dp__range_start,
-.dp__active_date {
-  background: #5f76e8 !important;
-}
-
-.dp__today {
-  border: 1px solid #5f76e8 !important;
 }
 </style>

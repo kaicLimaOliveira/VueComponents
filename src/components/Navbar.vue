@@ -1,24 +1,23 @@
 <template>
-  <div class="is-flex">
+  <div class="navigate">
     <aside class="sidebar is-flex is-flex-direction-column" :class="sideBarState">
-      <div class="mt-5 mb-2 is-clickable is-flex is-justify-content-center" @click="$router.push({ name: 'Home' })">
+      <div class="sidebar-logo" @click="$router.push({ name: 'Home' })">
         <div :class="{'logo-loader': state.isLoadingImage }"></div>
         <img :src="props.imgSrc" width="35" alt="logo">
       </div>
+      <hr>
  
-      <hr class="my-3">
- 
-      <div class="is-flex is-flex-direction-column scrollable-content">
-        <div class="mb-4">
-          <div class="is-flex is-align-items-center w-100 is-relative" v-for="{ params, label, icon, ...route } in props.routerLinks">
+      <div class="router-links">
+        <div class="container-links">
+          <div class="links" v-for="{ params, label, icon, ...route } in props.routerLinks">
             <RouterLink
               v-if="route.type == 'link'"
-              class="router-link is-flex has-text-weight-semibold w-100 h-100"
+              class="router-link"
               :to="{ name: route.routeName, params }"
               :title="label"
             >
-              <Icon :icon class="has-text-black is-flex is-justify-content-center is-align-items-center" size="sm" />
-              <span class="fs-11 is-align-self-center ml-3">
+              <Icon :icon class="router-link-icon" size="sm" />
+              <span>
                 {{ label }}
               </span>
             </RouterLink>
@@ -36,17 +35,17 @@
       </div>
     </aside>
    
-    <header class="content is-flex is-flex-direction-column is-flex-grow-1 vh-100 w-75">
-      <div class="nav-content px-5 py-3 is-flex is-justify-content-space-between">
+    <nav class="header-content">
+      <header class="nav-content">
         <div class="is-flex is-align-items-center">
-          <Icon icon="bars" @click="toggleSideBar" class="mr-5 is-clickable fs-19"></Icon>
+          <Icon icon="bars" @click="toggleSideBar" />
         </div>
-      </div>
- 
-      <nav class="h-100">
+      </header>
+      
+      <main>
         <slot></slot>
-      </nav>
-    </header>
+      </main>
+    </nav>
   </div>
 </template>
  
@@ -90,63 +89,113 @@ function toggleSideBar() {
 </script>
  
 <style lang="scss" scoped>
-.sidebar {
-  transition: 0.3s ease;
-  flex-shrink: 0;
-  z-index: 100;
-  height: 100vh;
-  width: 100vw;
-  border-right: 1px var(--grey-600) solid;
-  background-color: var(--gray-500);
-  padding: 0 16px;
- 
-  &-links {
-    height: 100%;
-    overflow-y: scroll;
- 
-    &::-webkit-scrollbar {
-      display: none;
+.navigate {
+  display: flex;
+
+  .sidebar {
+    transition: 0.3s ease;
+    flex-shrink: 0;
+    z-index: 100;
+    height: 100vh;
+    // width: 100vw;
+    border-right: 1px var(--grey-600) solid;
+    background-color: var(--gray-500);
+    padding: 0 16px;
+
+    &-logo {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+
+  
+    &-links {
+      height: 100%;
+      overflow-y: scroll;
+  
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  
+    hr {
+      background-color: var(--grey-500);
+      margin-top: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+  
+    .router-links {
+      overflow-y: scroll;
+      display: flex;
+      flex-direction: column;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .container-links  {
+        margin-bottom: 20px;
+
+        .links {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          position: relative;
+      
+          .router-link {
+            margin: 0px 0px 5px;
+            border-radius: 4px;
+            transition: .12s;
+            padding: 10px;
+            background-color: var(--grey-400);
+            display: flex;
+            width: 100%;
+            height: 100%;
+            font-weight: 600;
+            
+            &:hover {
+              background-color: var(--grey-600);
+
+              svg, span {
+                color: rgb(255, 255, 255) !important;
+              }
+            }
+            
+            &-icon {
+              margin: 0 5px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: black;
+            }
+
+            span {
+              font-size: 11px;
+              align-items: center;
+              color: var(--black-700);
+              margin-left: 12px;
+            }
+          }
+        }
+      }
     }
   }
- 
-  hr {
-    background-color: var(--grey-500)
-  }
- 
-  .scrollable-content {
-    overflow-y: scroll;
- 
-    &::-webkit-scrollbar {
-      display: none;
-    }
- 
-    .router-link {
-      margin: 0px 0px 5px;
-      border-radius: 4px;
-      transition: .12s;
-      padding: 10px;
-      background-color: var(--grey-400);
- 
-      svg, span {
-        color: var(--black-700);
-        margin: 0 5px;
-      }
- 
-      &:hover {
-        background-color: var(--grey-600);
-      }
- 
-      &:hover svg,
-      &:hover span {
-        color: rgb(255, 255, 255) !important;
-      }
- 
-    }
+
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100vh;
+    width: 75%;
   }
 }
+
+
  
 .router-link-active {
-  background-color: var(--grey-600);
+  background-color: var(--grey-600) !important;
   color: #fff !important;
 }
  
@@ -157,20 +206,33 @@ function toggleSideBar() {
 .closed.sidebar {
   width: 75px;
  
-  .router-link {
-    span {
-      display: none;
-    }
+  .router-link span {
+    display: none;
   }
 }
  
-nav {
+main {
   overflow: auto;
   scrollbar-width: thin;
+
+  height: 100%;
 }
  
 .nav-content {
   box-shadow: inset 0 -1px 0 var(--grey-600);
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 22px;
+
+  div {
+    display: flex;
+    align-items: center;
+
+    svg {
+      margin-right: 20px;
+      cursor: pointer;
+    }
+  }
  
   svg {
     color: var(--black);

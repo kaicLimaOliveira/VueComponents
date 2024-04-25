@@ -1,6 +1,6 @@
 <template>
-  <div class="is-flex is-justify-content-center">
-    <div class="is-flex is-align-items-center mr-1">
+  <div class="pagination">
+    <div class="pagination-previous-button">
       <button 
         class="button"
         :class="!isPrevControlsActive && !showButtonsOnBounderies ? 'is-invisible' : 'control-items-active'"
@@ -10,7 +10,7 @@
       </button>
     </div>
 
-    <div class="is-flex">
+    <div class="pagination-pages">
       <span v-for="page, key in pagination" :key="key">
         <Transition name="slide">
           <button 
@@ -27,7 +27,7 @@
         </span>
     </div>
 
-    <div class="is-flex is-align-items-center ml-1">
+    <div class="pagination-next-button">
       <button 
         class="button"
         :class="!isNextControlsActive && !showButtonsOnBounderies ? 'is-invisible' : 'control-items-active'"
@@ -129,6 +129,60 @@ function goToNext() {
 </script>
 
 <style scoped lang="scss">
+.pagination {
+  display: flex;
+  justify-content: center;
+
+  &-previous {
+    display: flex;
+    align-items: center;
+    margin-right: 4px;
+
+    button {
+      background-color: hsl(0, 0%, 100%);
+      border-color: hsl(0, 0%, 86%);
+      border-width: 1px;
+      color: hsl(0, 0%, 21%);
+      cursor: pointer;
+      justify-content: center;
+      padding-bottom: calc(0.5em - 1px);
+      padding-left: 1em;
+      padding-right: 1em;
+      padding-top: calc(0.5em - 1px);
+      text-align: center;
+      white-space: nowrap;
+    }
+  }
+
+  &-pages {
+    display: flex;
+    .page {
+      background-color: #ebe9e9;
+      border: 1px solid hsl(0, 0%, 86%);
+      color: #3f4244;
+      min-width: 2rem;
+      transition: box-shadow 0.2s;
+      border-radius: 4px;
+      transition: .17s;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+
+      &-active {
+        background-color: var(--link) !important;
+        color: #fff;
+      }
+    }
+  }
+
+  &-next {
+    display: flex;
+    align-items: center;
+    margin-right: 4px;
+  }
+}
+
 .control-items-active {
   fill: #000;
   transition: fill 0.2s ease-in-out;
