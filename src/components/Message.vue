@@ -11,7 +11,7 @@
         ></button>
       </div>
   
-      <div v-html="props.content" class="message-body">
+      <div v-html="props.content" class="message-body content">
       </div>
     </article>
   </Transition>

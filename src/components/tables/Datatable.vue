@@ -5,13 +5,14 @@
 
       <div class="is-flex is-align-items-center">
         <DebounceInput 
+          v-if="props.enableInputSearch"
           :has-details-icon="true" 
           :details-label="props.searchInputDetailsLabel"
           :details-data="props.searchInputDetailsData" 
           @update:modelValue="state.search = $event"
         ></DebounceInput>
   
-        <div v-if="showChangeItemsPerPage" class="has-text-weight-medium ml-3">
+        <div v-if="props.enableChangeItemsPerPage" class="has-text-weight-medium ml-3">
           <label class="is-flex is-align-items-center">Mostrar 
             <select 
               v-model="state.itemsPerPage"
@@ -43,8 +44,8 @@
               <div @click="orderedFields(key as string)" class="is-flex">
                 <span>{{ header }}</span>
 
-                <div class="ml-3 is-relative" v-if="fieldExceptions(key as string)">
-                  <Transition name="slide-up" >
+                <div class="ml-3 is-relative" v-if="fieldExceptions(key as string) && props.enableOrdered">
+                  <Transition name="slide-up">
                     <Icon v-if="state.ordered === 'normal'" icon="sort" class="is-absolute" />
                     <Icon v-else-if="state.ordered === 'up'" icon="sort-up" class="is-absolute" />
                     <Icon v-else-if="state.ordered === 'down'" icon="sort-down" class="is-absolute" />
@@ -135,10 +136,12 @@ interface Props {
   tablePadding?: number;
   showButtonsOnBounderies?: boolean;
   enableDateFilter?: boolean;
+  enableOrdered?: boolean;
   dateFilterStart?: Date;
   searchInputDetailsLabel?: string;
   searchInputDetailsData?: string[];
-  showChangeItemsPerPage?: boolean;
+  enableChangeItemsPerPage?: boolean;
+  enableInputSearch?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -155,7 +158,8 @@ const props = withDefaults(defineProps<Props>(), {
   enableDateFilter: false,
   dateFilterStart: (_props) => new Date(),
   searchInputDetailsLabel: 'Você pode filtrar os seguintes campos:',
-  showChangeItemsPerPage: true,
+  enableChangeItemsPerPage: true,
+  enableInputSearch: true
 })
 
 

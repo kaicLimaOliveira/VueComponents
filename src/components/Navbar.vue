@@ -124,6 +124,10 @@ function toggleSideBar() {
       background-color: var(--grey-500);
       margin-top: 0.75rem;
       margin-bottom: 0.75rem;
+      border: none;
+      display: block;
+      height: 2px;
+      margin: 1.5rem 0;
     }
   
     .router-links {
@@ -154,6 +158,7 @@ function toggleSideBar() {
             width: 100%;
             height: 100%;
             font-weight: 600;
+            text-decoration: none;
             
             &:hover {
               background-color: var(--grey-600);

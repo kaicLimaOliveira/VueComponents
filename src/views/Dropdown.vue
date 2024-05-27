@@ -4,12 +4,25 @@
       class="fs-13"
       title="Dropdown" 
       content="
+      O componente de dropdown é útil quando queremos armazenar diversos conteúdos, como links, 
+      para não poluir a tela.
         
-        <br><br>
+        <br><b> ** Propriedades em negrito são obrigatórias ** </b><br><br>
+
 
         1. Props:
           <ul>
             <li>
+              <b>links(Link[])</b>: Essa propriedade corresponde a cada link/rota que será exibido no dropdown.
+            </li>
+            <li>
+              <b>label(string)</b>: A label exibida no dropdown.
+            </li>
+            <li>
+              icon(string | string []): O ícone exibido no dropdown.
+            </li>
+            <li>
+              <b>is-closed(boolean)</b>: Se o dropdown está aberto ou fechado.
             </li>
           </ul>
       " 
@@ -24,6 +37,7 @@
             :links="state.links"
             label="Dropdown"
             :icon="['fab', 'dropbox']"
+            :is-closed="false"
           ></Dropdown>
         </div>
 

@@ -61,15 +61,11 @@ interface Props {
   label: string;
   icon?: string | string[];
   isClosed: boolean;
-  searchInputDetailsLabel?: string;
-  searchInputDetailsPosition?: string;
 }
  
 const props = withDefaults(defineProps<Props>(), {
   links: () => [],
   isClosed: false,
-  searchInputDetailsLabel: 'Você pode filtrar os seguintes campos:',
-  searchInputDetailsPosition: 'right',
 })
  
  
@@ -188,6 +184,7 @@ watch(
       font-weight: 600;
       width: 100%;
       height: 100%;
+      text-decoration: none;
 
       &:hover {
         background-color: var(--grey-600);

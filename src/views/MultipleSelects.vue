@@ -50,8 +50,8 @@
       :closed-option="false"
     ></Message>
 
+    <h5>MultipleSelect</h5>
     <section class="mt-4">
-      <h5>MultipleSelect</h5>
       <div class="columns">
         <div class="column is-6">
           <MultipleSelect 
