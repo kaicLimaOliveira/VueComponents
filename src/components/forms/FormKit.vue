@@ -4,7 +4,7 @@
       <div class="is-flex is-align-items-center">
         <label class="label">{{ props.label }}</label>
         <Popover
-          v-show="hasPopover"
+          v-if="hasPopover"
           class="ml-1 mb-2 is-clickable"
           :content="props.popover"
         >
@@ -103,26 +103,16 @@ const state: State = reactive({
 })
  
  
-watch(
-  () => props.triggerValidation,
-  (newValue) => {
-    if (newValue)
-      triggerValidation(props.modelValue ?? '')
-  }
-)
- 
-watch(
-  () => props.modelValue,
-  (newValue) => {
-    if (newValue)
-      triggerValidation(props.modelValue ?? '')
-  }
-)
+watch(() => props.triggerValidation, (newValue) => {
+  if (newValue) triggerValidation(props.modelValue ?? '');
+});
+
+watch(() => props.modelValue, (newValue) => {
+  if (newValue) triggerValidation(props.modelValue ?? '');
+});
  
 onUpdated(() => {
-  if (props.isDisabled) {
-    state.errors.clear()
-  }
+  if (props.isDisabled) state.errors.clear();
 })
  
  
