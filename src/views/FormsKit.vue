@@ -17,7 +17,7 @@
               <b>v-model(string)</b>: Esse é o campo principal, onde será passado via prop o valor que foi digitado no input.
             </li>
             <li>
-              <b>model(string)</b>: Nosso FormKit é dinâmico, logo você pode definir qual o modelo do formulário, dentre as 
+              <b>inputType(string)</b>: Nosso FormKit é dinâmico, logo você pode definir qual o modelo do formulário, dentre as 
               opções como 'select', 'input', 'textarea'. Ele definirá qual será o tipo do formulário.
             </li>
             <li>
@@ -31,7 +31,7 @@
               placeholder(string): Texto usado para placeholder no input.
             </li>
             <li>
-              blank(boolean): Este campo define se o formulário pode aceitar vazio. Portanto, quando o valor estiver vazio, a 
+              allowEmpty(boolean): Este campo define se o formulário pode aceitar vazio. Portanto, quando o valor estiver vazio, a 
               validação de vazio não será acionada.
             </li>
             <li>
@@ -57,7 +57,7 @@
               orientá-lo.
             </li>
             <li>
-              popover(string): Caso você tenha informações adicionais, esse campo adiciona um popover para que você destaque mais 
+              tooltipContent(string): Caso você tenha informações adicionais, esse campo adiciona um popover para que você destaque mais 
               informações a respeito do campo.
             </li>
           </ul>
@@ -86,7 +86,7 @@
       <section class="w-25">
         <FormKit
           v-model.trim="state.inputText"
-          model="input"
+          inputType="input"
           label="FormKit Text"
           placeholder="Digite um texto"
           @can-send="state.formFields.inputText = $event"
@@ -94,7 +94,7 @@
    
         <FormKit
           v-model.trim="state.inputNumber"
-          model="input"
+          inputType="input"
           type="number"
           label="FormKit Number"
           placeholder="Digite um número"
@@ -103,7 +103,7 @@
   
         <FormKit
           v-model.trim="state.inputSelect"
-          model="select"
+          inputType="select"
           label="FormKit Select"
         >
           <option value="1">First option</option>
@@ -114,7 +114,7 @@
   
         <FormKit
           v-model.trim="state.inputTextarea"
-          model="textarea"
+          inputType="textarea"
           label="FormKit Textarea"
           placeholder="Digite um texto longo"
           :max-length="240"
@@ -271,15 +271,15 @@
 
         <FormKit
           v-model.trim="state.customInput.vModel"
-          model="input"
+          inputType="input"
           :type="state.customInput.typeInput.value"
-          :blank="state.customInput.typeInput.blank"
+          :allowEmpty="state.customInput.typeInput.blank"
           label="FormKit Personalizado"
           :placeholder="state.customInput.placeholder"
           :max-length="state.customInput.maxLength"
           :is-disabled="state.customInput.isDisabled"
           :help-text="state.customInput.helpText"
-          :popover="state.customInput.popover"
+          :tooltipContent="state.customInput.popover"
           :icon="state.customInput.icon"
           @can-send="(value: boolean) => state.formFields.inputTextarea = value"
         ></FormKit>

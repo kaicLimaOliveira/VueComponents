@@ -6,7 +6,7 @@
         <Popover
           v-if="hasPopover"
           class="ml-1 mb-2 is-clickable"
-          :content="props.popover"
+          :content="props.tooltipContent"
         >
           <Icon class="has-text-info" icon="exclamation-circle" />
         </Popover>
@@ -15,14 +15,14 @@
         class="control"
         :class="{ 'has-icons-left': props.icon }"
       >
-        <div :class="[ props.model === 'select' ? 'select w-100' : '']">
+        <div :class="[ props.inputType === 'select' ? 'select w-100' : '']">
           <Component
             :value="makedValue"
-            :is="props.model"
+            :is="props.inputType"
             v-bind="inputBindings"
             :placeholder="props.placeholder"
             :disabled="props.isDisabled"
-            :class="[props.model, { 'is-danger': hasErrors }, {'w-100': props.model === 'select'}]"
+            :class="[props.inputType, { 'is-danger': hasErrors }, {'w-100': props.inputType === 'select'}]"
             @input="handleInput"
             @focus="emit('focused')"
             @blur="handleBlur"
@@ -61,32 +61,32 @@ const emit = defineEmits<{
  
 interface Props {
   modelValue: any;
-  model: string;
+  inputType: string;
   type?: string;
   label: string;
   placeholder?: string;
-  blank?: boolean;
+  allowEmpty?: boolean;
   maxLength?: number;
   customValidation?: any;
   icon?: string;
   isDisabled?: boolean;
   mask?: Function;
   helpText?: string;
-  popover?: string;
-  triggerValidation?: boolean;
+  tooltipContent?: string;
+  validateOnUpdate?: boolean;
 }
  
 const props = withDefaults(defineProps<Props>(), {
   modelValue: '',
   maxLength: 255,
-  blank: false,
+  allowEmpty: false,
   placeholder: 'Preencha o campo...',
   isDisabled: false,
-  triggerValidation: false,
+  validateOnUpdate: false,
   type: 'text',
   mask: (e) => e,
   helpText: '',
-  popover: '',
+  tooltipContent: '',
   customValidation: {
     func: (_e: string) => true,
     msg: ''
@@ -103,7 +103,7 @@ const state: State = reactive({
 })
  
  
-watch(() => props.triggerValidation, (newValue) => {
+watch(() => props.validateOnUpdate, (newValue) => {
   if (newValue) triggerValidation(props.modelValue ?? '');
 });
 
@@ -117,9 +117,9 @@ onUpdated(() => {
  
  
 const makedValue = computed(() => props.mask(props.modelValue))
-const inputBindings = computed(() => props.model === 'input' ? {type: props.type} : {})
+const inputBindings = computed(() => props.inputType === 'input' ? {type: props.type} : {})
 const hasErrors = computed(() => state.errors.size > 0);
-const hasPopover = computed(() => props.popover.length > 0);
+const hasPopover = computed(() => props.tooltipContent.length > 0);
  
  
 const handleInput = (event: Event) => {
@@ -151,7 +151,7 @@ const triggerValidation = (text: string) => {
  
   text = text.toString();
  
-  const isEmpty = !props.blank && text.trim() === '';
+  const isEmpty = !props.allowEmpty && text.trim() === '';
   addOrDeleteError(isEmpty, errorMessages.empty)
  
   const isMoreThanMaxLength = text.length > props.maxLength;
