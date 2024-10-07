@@ -114,6 +114,8 @@
           :open="state.crudModal.open" 
           :view-mode="state.crudModal.mode" 
           :action-middleware="actionMiddleware"
+          :can-execute-action="canExecuteAction"
+          @trigger-validation="false"
           @close-modal="state.crudModal.open = false"
         >
           <template #header>
@@ -124,7 +126,7 @@
             <FormKit
               v-if="state.crudModal.mode !== 'create'"
               v-model.trim="state.selectedItem.id"
-              model="input"
+              input-type="input"
               label="Id"
               placeholder="Id"
               is-disabled
@@ -135,29 +137,34 @@
               <FormKit
                 class="pr-2"
                 v-model.trim="state.selectedItem.firstName"
-                model="input"
+                input-type="input"
                 label="Primeiro nome"
                 placeholder="Primeiro nome"
                 :is-disabled="state.crudModal.mode === 'view'"
                 :max-length="40"
+                :validate-on-update="false"
+                @can-send="state.requiredFields.firstName = $event"
               ></FormKit>
 
               <FormKit
                 v-model.trim="state.selectedItem.lastName"
-                model="input"
+                input-type="input"
                 label="Último nome"
                 placeholder="Último nome"
                 :is-disabled="state.crudModal.mode === 'view'"
                 :max-length="40"
+                :validate-on-update="false"
+                @can-send="state.requiredFields.lastName = $event"
               ></FormKit>
             </div>
 
             <FormKit
               v-model.trim="state.selectedItem.email"
-              model="input"
+              input-type="input"
               label="E-mail"
               placeholder="E-mail"
               :is-disabled="state.crudModal.mode === 'view'"
+              :allow-empty="true"
               :max-length="40"
             ></FormKit>
           </template>
@@ -174,10 +181,13 @@ import Datatable from "../components/tables/Datatable.vue"
 import FormKit from "../components/forms/FormKit.vue";
 import Message from "../components/Message.vue";
 
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import { Faker, randomDataFaker } from "../utils/faker";
 import { Generic } from "../interfaces/Generic";
+import { useAlertStore } from "../stores/alertStore"
 
+const alertStore = useAlertStore()
+alertStore.alerts = [];
 
 interface State {
   data: Faker[]
@@ -185,6 +195,9 @@ interface State {
   crudModal: {
     open: boolean;
     mode: string;
+  };
+  requiredFields: {
+    [key: string]: boolean;
   }
 }
 
@@ -200,6 +213,11 @@ const state: State = reactive({
   crudModal: {
     open: false,
     mode: "view",
+  },
+  requiredFields: {
+    firstName: false,
+    lastName: false,
+    email: true
   }
 })
 
@@ -285,4 +303,8 @@ function deleteItem(id: string) {
     }
   })
 }
+
+const canExecuteAction = computed(() => {
+  return Object.values(state.requiredFields).every(valid => valid === true);
+});
 </script>

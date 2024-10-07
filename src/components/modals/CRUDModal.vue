@@ -34,7 +34,14 @@
             v-if="state.objectViewMode === 'create'" 
             :class="{ 'is-loading': state.actionButtonDisabled }"
             class="button is-link" 
-            @click="props.actionMiddleware('create')"
+            @click="() => {
+              emit('trigger-validation')
+              if (props.canExecuteAction) {
+                props.actionMiddleware('create')
+                return
+              }
+              showValidationAlert()
+            }"
           >
             Cadastrar
           </button>
@@ -77,7 +84,15 @@
           <button 
             :class="{ 'is-loading': state.actionButtonDisabled }" 
             class="button is-link"
-            @click="confirmAction"
+            @click="() => {
+              emit('trigger-validation')
+              if (props.canExecuteAction) {
+                props.actionMiddleware(state.clickedAction)
+                state.confirmAction = false
+                return
+              }
+              showValidationAlert()
+            }"
           >
             Confirmar
           </button>
@@ -90,7 +105,9 @@
 <script setup lang="ts">
 import BasicModal from "./BasicModal.vue"
 import { reactive, watch } from 'vue'
+import { useAlertStore } from "../../stores/alertStore"
 
+const alertStore = useAlertStore()
 const emit = defineEmits<{
   (event: 'close-modal'): void;
   (event: 'trigger-validation'): void;
@@ -125,14 +142,14 @@ const state: State = reactive({
 })
 
 
-function confirmAction() {
-  state.actionButtonDisabled = true;
-  setTimeout(() => state.actionButtonDisabled = false, 300);
-
-  props.actionMiddleware(state.clickedAction);
-  state.confirmAction = false
+function showValidationAlert() {
+  alertStore.add({
+    icon: 'circle-exclamation',
+    type: 'danger',
+    title: 'Atenção!',
+    content: 'Preencha todos os campos corretamente.'
+  }, 4)
 }
-
 
 watch(
   () => props.viewMode,

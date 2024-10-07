@@ -75,16 +75,20 @@ import ProgressAlert from '../components/alerts/ProgressAlert.vue';
 
 import { useAlertStore } from '../stores/alertStore';
 import { onMounted } from 'vue';
+import { faker } from "@faker-js/faker";
 
 
 const alertStore = useAlertStore()
 
 onMounted(async () => {
-  alertStore.alerts = [{
-    title: "Título do alerta",
-    content: "Esse é um exemplo de alerta",
-    type: "success",
-    icon: "circle-check",
-  }]
+  alertStore.alerts = [
+    {
+      id: faker.string.uuid(),
+      title: "Título do alerta",
+      content: "Esse é um exemplo de alerta",
+      type: "success",
+      icon: "circle-check",
+    },
+  ]
 })
 </script>

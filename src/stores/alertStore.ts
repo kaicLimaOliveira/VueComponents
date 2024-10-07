@@ -23,7 +23,6 @@ export const useAlertStore = defineStore('alert', {
     },
     remove(el: Alert) {
       const i = this.alerts.indexOf(el)
-      return i
       if (i > -1)
         this.alerts.splice(i, 1)
     },

@@ -1,7 +1,12 @@
 <template>
   <div :class="{ 'dark-theme': isDarkModeOn }">
     <RouterView v-slot="{ Component }">
-
+      <ProgressAlert 
+        v-if="$route.name == 'Datatables'"
+        class="is-absolute is-flex is-align-items-center is-flex-direction-column mt-3"
+        style="z-index: 9999;"
+      ></ProgressAlert>
+      
       <Navbar v-if="$route.meta.enableNav" :router-links="state.routerLinks">
         <Transition name="fade" mode="out-in">
           <Component 
@@ -23,6 +28,7 @@
 
 <script setup lang="ts">
 import Navbar from "./components/Navbar.vue"
+import ProgressAlert from "./components/alerts/ProgressAlert.vue";
 import Loader from "./components/loaders/Loader.vue"
 
 import { useDarkModeStore } from "./stores/darkStore";

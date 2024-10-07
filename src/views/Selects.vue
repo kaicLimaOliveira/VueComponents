@@ -80,7 +80,7 @@
         <template #body>
           <FormKit
             v-model.trim="state.selected.firstName"
-            model="input"
+            input-type="input"
             label="Primeiro nome"
             placeholder="Primeiro nome"
             :is-disabled="state.crudModal.mode === 'view'"
